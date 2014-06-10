@@ -1,0 +1,32 @@
+{
+  "database": {
+    "host": "192.168.150.220",
+    "name": "speakrtc",
+    "user": "admin",
+    "pass": "admin",
+    "port": ""
+  },
+
+  "website" : {
+    "port"       : 3000,
+    "super_admin": {
+      "name"    : "admin@root",
+      "password": "admin505"
+    },
+    "name"      : "Speak RTC"
+  },
+
+  "mailer"  : {
+    "host"            : "",
+    "secureConnection": false,
+    "port"            : "25",
+    "transport"       : "SMTP",
+    "from"            : "",
+    "domain"          : "",
+    "authentication"  : "",
+    "username"        : "",
+    "password"        : "",
+    "is_gmail"        : false,
+    "active"          : false
+  }
+}

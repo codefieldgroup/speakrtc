@@ -1,0 +1,38 @@
+{
+  "name"       : "Speak_RTC",
+  "version"    : "0.0.1",
+  "author"     : "Victor Cruz Alonso <victorcruzalonso@gmail.com>",
+  "description": "",
+  "private"    : true,
+
+  "scripts": {
+    "start": "node app.js"
+  },
+
+  "dependencies": {
+    "express"                : "*",
+    "express-session"        : "*",
+    "jade"                   : "*",
+    "passport"               : "*",
+    "passport-local"         : "*",
+    "passport-local-mongoose": "*",
+    "mongoose"               : "*",
+    "socket.io"              : "*",
+    "winston"                : "*",
+    "events"                 : "*",
+    "cron"                   : "*",
+    "body-parser"            : "*",
+    "cookie-parser"          : "*",
+    "errorhandler"           : "*",
+    "method-override"        : "*",
+    "morgan"                 : "*",
+    "serve-favicon"          : "*",
+    "static-favicon"         : "*"
+  },
+
+  "license": "",
+
+  "engines": {
+    "node": ">=0.10"
+  }
+}
