@@ -13,6 +13,8 @@
     "express"                : "*",
     "express-session"        : "*",
     "jade"                   : "*",
+    "easyrtc"                : "*",
+    "lodash"                 : "*",
     "passport"               : "*",
     "passport-local"         : "*",
     "passport-local-mongoose": "*",

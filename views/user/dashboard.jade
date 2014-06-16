@@ -1,0 +1,7 @@
+extends ../layout
+
+block content
+	if (user)
+		p #{user.email}
+	else
+		p User not logged

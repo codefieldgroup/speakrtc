@@ -1,8 +1,9 @@
 var express = require('express'),
-  config = require('../config'),
 
-  users = require('../controllers/users'),
-  index = require('../controllers/index');
+  user = require('../controllers/user'),
+  index = require('../controllers/index'),
+
+  config = require('../config');
 
 module.exports = function (app) {
   // Create a new router.
@@ -11,15 +12,5 @@ module.exports = function (app) {
   // Invoked for any requests passed to this router.
   app.use('/', app_route);
 
-  /**
-   * API GET.
-   */
-
   app_route.get('/', index.get_index);
-
-  /**
-   * API POST.
-   */
-
-
-}
+};

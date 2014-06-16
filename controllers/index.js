@@ -1,6 +1,6 @@
-var config = require('../config'),
+var log = require('../lib/log'),
 
-  log = require('../lib/log');
+  config = require('../config');
 
 module.exports = {
   /**
@@ -10,14 +10,11 @@ module.exports = {
    * @param res
    */
   get_index: function (req, res) {
-    var object_user = req.user;
-
-    // Log.
-    log.save('information', req.ip, req.method, 'Access to index page.', object_user);
-
-    res.render('index', {
-      user    : object_user,
-      datetime: Date.now()
-    });
+    if (req.isAuthenticated()) {
+      res.redirect('/user/dashboard');
+    }
+    else {
+      res.redirect('/auth/login');
+    }
   }
 };
