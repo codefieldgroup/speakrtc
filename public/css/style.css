@@ -1,0 +1,21 @@
+/*=Gritter Plugin. Modificaciones.
+ -------------------------------------------------------------- */
+.cf-speakrtc .gritter-title {
+	text-shadow : inherit;
+}
+
+.cf-speakrtc .gritter-title .label-success {
+	background-color : #447a44;
+}
+
+.cf-speakrtc .gritter-title .label-info {
+	background-color : #0b6e8b;
+}
+
+.cf-speakrtc .gritter-title .label-warning {
+	background-color : #c7790a;
+}
+
+.cf-speakrtc .gritter-title .label-danger {
+	background-color : #be3935;
+}

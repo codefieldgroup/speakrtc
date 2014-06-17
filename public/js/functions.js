@@ -41,10 +41,10 @@ function refresh_connection_state(code) {
  */
 function flash_message_launch(message) {
   if (message.type == 'error') {
-    flash_message(message.msg, message.type, 'top', 4000);
+    flash_message(message.msg, message.type);
   }
   if (message.type == 'success') {
-    flash_message(message.msg, message.type, 'top', 4000);
+    flash_message(message.msg, message.type);
   }
 }
 
@@ -52,20 +52,33 @@ function flash_message_launch(message) {
  * Generate message depending of the type.
  *
  * @param msg String Is the message to show.
- * @param type String Is the type of message (success, notification, information, alert, error).
- * @param layout String It is the position in which the message will be shown (top, topCenter, topLeft, topRight, center, centerLeft, centerRight, bottom, bottomCenter, bottomLeft, bottomRight).
- * @param interval Number Seconds to hide, by default 10000.
+ * @param type String Is the type of message (success, notification, alert, error).
+ * @param sticky If want it to fade out on its own or just sit there.
+ * @param image Path of image to show.
  */
-function flash_message(msg, type, layout, interval) {
-  var n = noty({
-      text        : msg,
-      type        : type,
-      dismissQueue: false,
-      layout      : layout,
-      theme       : 'defaultTheme'
-    },
-    setTimeout(function () {
-      $.noty.closeAll(n.options.id);
-    }, interval)
-  );
+function flash_message(msg, type, sticky, image) {
+  var title = '';
+
+  switch (type) {
+    case 'success':
+      title = '<span class="label label-success">' + type.toUpperCase() + '</span>';
+      break;
+    case 'notification':
+      title = '<span class="label label-info">' + type.toUpperCase() + '</span>';
+      break;
+    case 'alert':
+      title = '<span class="label label-warning">' + type.toUpperCase() + '</span>';
+      break;
+    case 'error':
+      title = '<span class="label label-danger">' + type.toUpperCase() + '</span>';
+      break;
+  }
+
+  $.gritter.add({
+    title : title,
+    text  : msg,
+    image : (image) ? image : '/vendors/gritter/images/glyphicons_195_circle_info.png',
+    sticky: (sticky) ? sticky : false,
+    time  : ''
+  });
 }
