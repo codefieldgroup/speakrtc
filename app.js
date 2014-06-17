@@ -10,6 +10,8 @@ var express = require('express'),
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
 
+  sockets = require('./routes/sockets.js'),
+
   User = require('./models/user'),
 
   config = require('./config.json');
@@ -54,6 +56,9 @@ require('./routes')(app);
 
 // Server Block.
 var server = http.createServer(app);
+
+// Socket.
+sockets.socketServer(app, server);
 
 server.listen(app.get('port'), function () {
   console.log("Web Monitor server listening by port: " + app.get('port'));

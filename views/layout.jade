@@ -22,8 +22,12 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 			<![endif]
 
 	body
+		//- CU: Logout.
 		if(user)
 			a(href="/auth/logout") Logout
+
+		//- CU: Verify the connection and to show their state.
+		span.label.label-default#cf-connection-state Disconnected
 
 		block content
 

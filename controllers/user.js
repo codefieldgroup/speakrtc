@@ -1,4 +1,6 @@
-var log = require('../lib/log'),
+var socket = require('../routes/sockets'),
+
+  log = require('../lib/log'),
 
   User = require('../models/user'),
 
