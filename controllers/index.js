@@ -3,6 +3,11 @@ var log = require('../lib/log'),
   config = require('../config');
 
 module.exports = {
+
+  /**
+   * GET request methods.
+   */
+	
   /**
    * Index page.
    *
@@ -17,4 +22,20 @@ module.exports = {
       res.redirect('/auth/login');
     }
   }
+  
+  /**
+   * POST request methods.
+   */
+   
+   /**
+   * API GET.
+   */
+
+  /**
+   * API POST.
+   */
+
+  /**
+   * API SOCKETS.
+   */
 };

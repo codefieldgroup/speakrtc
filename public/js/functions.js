@@ -55,8 +55,9 @@ function flash_message_launch(message) {
  * @param type String Is the type of message (success, notification, alert, error).
  * @param sticky If want it to fade out on its own or just sit there.
  * @param image Path of image to show.
+ * @param class_name Class css.
  */
-function flash_message(msg, type, sticky, image) {
+function flash_message(msg, type, sticky, image, class_name) {
   var title = '';
 
   switch (type) {
@@ -75,10 +76,11 @@ function flash_message(msg, type, sticky, image) {
   }
 
   $.gritter.add({
-    title : title,
-    text  : msg,
-    image : (image) ? image : '/vendors/gritter/images/glyphicons_195_circle_info.png',
-    sticky: (sticky) ? sticky : false,
-    time  : ''
+    title     : title,
+    text      : msg,
+    image     : (image) ? image : '/vendors/gritter/images/glyphicons_195_circle_info.png',
+    sticky    : (sticky) ? sticky : false,
+    time      : '',
+    class_name: (class_name) ? class_name : ''
   });
 }

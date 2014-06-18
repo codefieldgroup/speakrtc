@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services.
-var app = angular.module('speakrtc', []).
+var app = angular.module('speakrtc', ['ngResource']).
 
 	// Routes of APP.
 	config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

@@ -66,4 +66,67 @@ User.statics.add_super_admin = function (callback) {
   });
 };
 
+/**
+ * List all users.
+ *
+ * @param callback
+ * @returns {*}
+ */
+User.statics.list_all = function (callback) {
+  var this_model = this;
+
+  return this_model.find({}, function (error, docs) {
+    if (!error) {
+      callback(null, docs)
+    }
+    else {
+      callback(error);
+    }
+  });
+};
+
+/**
+ * Add new user in the DB if not exist.
+ *
+ * @param user    json
+ * @param callback
+ * @returns {*}
+ */
+User.statics.add = function (user, callback) {
+  var this_model = this;
+
+  return this.find({
+    email: user.email
+  }, function (error, docs) {
+    if (!error) {
+      if (!docs.length) {
+
+        var new_user = new this_model({
+          username : user.email,
+          email    : user.email,
+          is_admin : user.is_admin,
+          name     : user.name,
+          last_name: user.last_name,
+          active   : true
+        });
+
+        this_model.register(new_user, user.password, function (error) {
+          if (!error) {
+            callback(null, new_user);
+          }
+          else {
+            callback({ msg: 'Error: the user could not be added.', type: 'error' }, null);
+          }
+        });
+      }
+      else {
+        callback({ msg: 'Error: The user ' + user.email + ' already exists', type: 'error' }, null);
+      }
+    }
+    else {
+      callback({ msg: 'Error:' + error, type: 'error' }, null);
+    }
+  });
+};
+
 module.exports = mongoose.model('User', User);

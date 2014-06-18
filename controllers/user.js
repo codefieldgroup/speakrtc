@@ -24,6 +24,10 @@ module.exports = {
   },
 
   /**
+   * GET request methods.
+   */
+
+  /**
    * Show Dashboard of user logged.
    *
    * @param req
@@ -57,6 +61,27 @@ module.exports = {
   },
 
   /**
+   * Run out of the site (logout).
+   *
+   * @param req
+   * @param res
+   */
+  get_logout: function (req, res) {
+    var object_user = req.user;
+
+    // Log.
+    log.save('information', req.ip, req.method, 'Logout.', object_user);
+
+    req.logout();
+    res.clearCookie('client.sid', null);
+    res.redirect('/');
+  },
+
+  /**
+   * POST request methods.
+   */
+
+  /**
    * Run the authentication and redirect to the home page.
    *
    * @param req
@@ -73,20 +98,90 @@ module.exports = {
   },
 
   /**
-   * Run out of the site (logout).
+   * API GET.
+   */
+
+  /**
+   * Get all users.
    *
    * @param req
    * @param res
    */
-  get_logout: function (req, res) {
+  get_api_user_all: function (req, res) {
+    var object_user = req.user;
+
+    User.list_all(function (error, users) {
+      if (!error) {
+        // Log.
+        log.save('information', req.ip, req.method, 'Request to get all users, the result is: ' + users, object_user);
+        res.json(users);
+      }
+      else {
+        // Log.
+        log.save('error', req.ip, req.method, 'Request to get all users is failed.', object_user);
+        res.json({});
+      }
+    });
+  },
+
+  /**
+   * Put modifying all users.
+   *
+   * @param req
+   * @param res
+   */
+  put_api_user_all: function (req, res) {
     var object_user = req.user;
 
     // Log.
-    log.save('information', req.ip, req.method, 'Logout.', object_user);
+    log.save('warning', req.ip, req.method, 'PUT method request, not execute . this operation is not implemented.', object_user);
 
-    req.logout();
-    res.clearCookie('client.sid', null);
-    res.redirect('/');
+    res.json({ msg: 'Warning: This operation is not implemented.', type: 'alert' });
+  },
+
+  /**
+   * API POST.
+   */
+
+  /**
+   * Post Create new user.
+   *
+   * @param req
+   * @param res
+   */
+  post_api_user_new: function (req, res) {
+    var object_user = req.user;
+
+    // To call to the model to add a new user.
+    User.add(req.body, function (error, user) {
+      var json_return = {};
+
+      if (!error) {
+        json_return = {
+          type: 'success',
+          user: user,
+          msg : { msg: 'Success: The user is added.', type: 'success' }
+        };
+
+        // Log.
+        log.save('information', req.ip, req.method, 'added user ' + user.email + '.', object_user);
+
+        res.json(json_return);
+      }
+      else {
+        json_return = {
+          type : 'error',
+          error: error
+        };
+
+        // Log.
+        log.save('error', req.ip, req.method, 'Error while added user ' + req.body.email + ' , this user not added.', object_user);
+        res.json(json_return);
+      }
+    });
   }
 
+  /**
+   * API SOCKETS.
+   */
 };

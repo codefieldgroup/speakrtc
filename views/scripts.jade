@@ -6,6 +6,9 @@ script(src='/vendors/bootstrap/js/bootstrap.min.js')
 //- Gritter plugin of notifications.
 script(src='/vendors/gritter/js/jquery.gritter.min.js')
 
+// Socket.io.
+script(src="/socket.io/socket.io.js")
+
 //- Functions.
 script(src='/js/functions.js')
 
@@ -16,13 +19,12 @@ script(src='/js/app/app.js')
 
 // Factories Angularjs.
 script(src='/js/app/factories/socket.js')
+script(src='/js/app/factories/user.js')
 
 // Controllers Angularjs.
+script(src='/js/app/controllers/socket.js')
+script(src='/js/app/controllers/user.js')
 
 // Directives Angularjs.
 
 // Services Angularjs.
-
-// Socket.
-script(src="/socket.io/socket.io.js")
-script(src='/js/app/controllers/socket.js')
