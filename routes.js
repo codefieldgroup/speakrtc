@@ -8,5 +8,8 @@ module.exports = function (app) {
 
   // Route user and auth.
   require('./routes/user')(app);
+
+  // Route room.
+  require('./routes/room')(app);
 };
 

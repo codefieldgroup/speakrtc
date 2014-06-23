@@ -1,13 +1,8 @@
 extends ../layout
 
 block content
-	if (user)
-		// p #{user.email}
-	else
-		p User not logged
+	div(ng-controller="user_Ctrl")
 
-	div(ng-controller="user_controller")
-		p {{ users }}
-		div(ng-repeat="user in users")
-			p {{ user.email }}
-			br
+	div(ng-view)
+
+	include ../room/index

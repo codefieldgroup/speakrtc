@@ -102,12 +102,29 @@ module.exports = {
    */
 
   /**
+   * Get user if is logged.
+   *
+   * @param req
+   * @param res
+   */
+  get_api_user_auth: function (req, res) {
+    var object_user = req.user;
+
+    if (object_user) {
+      res.json(object_user);
+    }
+    else {
+      res.json(null);
+    }
+  },
+
+  /**
    * Get all users.
    *
    * @param req
    * @param res
    */
-  get_api_user_all: function (req, res) {
+  get_api_users: function (req, res) {
     var object_user = req.user;
 
     User.list_all(function (error, users) {
@@ -136,7 +153,7 @@ module.exports = {
     // Log.
     log.save('warning', req.ip, req.method, 'PUT method request, not execute . this operation is not implemented.', object_user);
 
-    res.json({ msg: 'Warning: This operation is not implemented.', type: 'alert' });
+    res.json({ msg: 'This operation is not implemented.', type: 'alert' });
   },
 
   /**
@@ -160,7 +177,7 @@ module.exports = {
         json_return = {
           type: 'success',
           user: user,
-          msg : { msg: 'Success: The user is added.', type: 'success' }
+          msg : { msg: 'The user is added.', type: 'success' }
         };
 
         // Log.

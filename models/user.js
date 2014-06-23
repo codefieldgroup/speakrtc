@@ -115,16 +115,16 @@ User.statics.add = function (user, callback) {
             callback(null, new_user);
           }
           else {
-            callback({ msg: 'Error: the user could not be added.', type: 'error' }, null);
+            callback({ msg: 'The user could not be added.', type: 'error' }, null);
           }
         });
       }
       else {
-        callback({ msg: 'Error: The user ' + user.email + ' already exists', type: 'error' }, null);
+        callback({ msg: 'The user ' + user.email + ' already exists', type: 'error' }, null);
       }
     }
     else {
-      callback({ msg: 'Error:' + error, type: 'error' }, null);
+      callback({ msg: error, type: 'error' }, null);
     }
   });
 };

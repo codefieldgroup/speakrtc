@@ -52,9 +52,11 @@ module.exports = function (app) {
   // Invoked for any requests passed to this router.
   app.use('/api/users', api_user_route);
 
+  api_user_route.get('/auth', user.ensure_authenticated, user.get_api_user_auth);
+
   // API /api/users
   api_user_route.route('/')
-    .get(/*TODO: Victor: user.ensure_authenticated,*/ user.get_api_user_all)
+    .get(/*TODO: Victor: user.ensure_authenticated,*/ user.get_api_users)
     .put(user.put_api_user_all)
     .post(/*TODO: Victor: user.ensure_authenticated,*/ user.post_api_user_new)
     .delete(/*TODO: Victor: Implemented this method request to delete all users*/);

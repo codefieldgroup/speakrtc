@@ -59,6 +59,7 @@ function flash_message_launch(message) {
  */
 function flash_message(msg, type, sticky, image, class_name) {
   var title = '';
+  var path_default_image = '/vendors/gritter/images/023.png';
 
   switch (type) {
     case 'success':
@@ -72,13 +73,14 @@ function flash_message(msg, type, sticky, image, class_name) {
       break;
     case 'error':
       title = '<span class="label label-danger">' + type.toUpperCase() + '</span>';
+      path_default_image = '/vendors/gritter/images/018.png';
       break;
   }
 
   $.gritter.add({
     title     : title,
     text      : msg,
-    image     : (image) ? image : '/vendors/gritter/images/glyphicons_195_circle_info.png',
+    image     : (image) ? image : path_default_image,
     sticky    : (sticky) ? sticky : false,
     time      : '',
     class_name: (class_name) ? class_name : ''

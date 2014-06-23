@@ -4,6 +4,11 @@
 	text-shadow : inherit;
 }
 
+.cf-speakrtc .gritter-item {
+	font-size   : 13px;
+	font-family : inherit;
+}
+
 .cf-speakrtc .gritter-title .label-success {
 	background-color : #447a44;
 }

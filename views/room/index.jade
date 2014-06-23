@@ -1,0 +1,22 @@
+//- Single Page of Room Model.
+
+script(id="_rooms",type="text/ng-template")
+	label Add New Room
+	form(name="form_add_room")
+		label Name
+		input(type="text",ng-model="room.name",required)
+		| required
+
+		br
+		input(type="checkbox",ng-model="room.is_blocked")
+		| Blocked?
+
+		br
+		input(type="checkbox",ng-model="room.is_show")
+		| Show?
+
+		br
+		select(multiple,ng-options="user._id as user.username for user in users",ng-model="room.users")
+
+		br
+		button(type="submit",ng-click="add(room)",ng-disabled="!form_add_room.$valid") Add Room
