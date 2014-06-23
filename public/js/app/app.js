@@ -15,6 +15,12 @@ app.config(['$routeProvider', function ($routeProvider) {
     // Show all rooms.
     .when('/rooms', {
       templateUrl: '_rooms',
+      controller : rooms_Ctrl
+    })
+
+    // Show room by ID.
+    .when('/rooms/:id', {
+      templateUrl: '_room',
       controller : room_Ctrl
     })
 

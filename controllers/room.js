@@ -20,6 +20,29 @@ module.exports = {
    */
 
   /**
+   * Get all rooms.
+   *
+   * @param req
+   * @param res
+   */
+  get_api_rooms: function (req, res) {
+    var object_user = req.user;
+
+    Room.list_all(object_user, function (error, rooms) {
+      if (!error) {
+        // Log.
+        log.save('information', req.ip, req.method, 'Request to get all rooms, the result is: ' + rooms, object_user);
+        res.json(rooms);
+      }
+      else {
+        // Log.
+        log.save('error', req.ip, req.method, 'Request to get all rooms is failed.', object_user);
+        res.json({});
+      }
+    });
+  },
+
+  /**
    * API POST.
    */
 

@@ -34,22 +34,33 @@ var Room = new Schema({
 /**
  * List all rooms.
  *
+ * @param auth_user
  * @param callback
- * @returns {*}
+ * @returns {Promise}
  */
-Room.statics.list_all = function (callback) {
+Room.statics.list_all = function (auth_user, callback) {
   var this_model = this;
 
+  // Rules Filter.
+  var or_filter = [];
+  if (!auth_user.is_admin) {
+    or_filter.push(
+      {is_show: true},
+      {_owner: auth_user._id},
+      {users: auth_user._id}
+    );
+  }
+
   return this_model.find({})
+    .or((or_filter.length > 0) ? or_filter : null)
     .populate('_owner')
+    .populate('users')
     .exec(function (error, docs) {
       if (!error) {
-
         callback(null, docs);
-
       }
       else {
-        callback({ msg: 'Internal error while get videos from DB.', type: 'error' }, null);
+        callback({ msg: 'Internal error while get rooms from DB.', type: 'error' }, null);
       }
     });
 };

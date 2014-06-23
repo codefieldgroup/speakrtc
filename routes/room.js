@@ -27,7 +27,7 @@ module.exports = function (app) {
 
   // API /api/rooms
   api_room_route.route('/')
-    .get(/*TODO: Victor: user.ensure_authenticated, Implemented this method to get all rooms*/)
+    .get(/*TODO: Victor: user.ensure_authenticated*/ room.get_api_rooms)
     /*TODO: Victor: .put(room.put_api_room_all)*/
     .post(/*TODO: Victor: user.ensure_authenticated,*/ room.post_api_room_add)
     .delete(/*TODO: Victor: Implemented this method request to delete all rooms*/);

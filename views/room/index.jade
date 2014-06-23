@@ -1,22 +1,58 @@
 //- Single Page of Room Model.
 
+//-
+	Templates by Routes.
+
+//- List all rooms.
 script(id="_rooms",type="text/ng-template")
-	label Add New Room
-	form(name="form_add_room")
-		label Name
-		input(type="text",ng-model="room.name",required)
-		| required
+	//- Include template to add room, Controller: add_room_Ctrl.
+	div(ng-include src=" '_add_room' ")
 
-		br
-		input(type="checkbox",ng-model="room.is_blocked")
-		| Blocked?
+	//- Block List Rooms.
+	br
+	div
+		label Rooms
+		div(style="border:1px solid red;",ng-repeat="room in rooms")
+			p {{ room.name }}
+				a(ng-href="#/rooms/{{ room._id }}")  | Access
 
-		br
-		input(type="checkbox",ng-model="room.is_show")
-		| Show?
+			p Created: {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}
 
-		br
-		select(multiple,ng-options="user._id as user.username for user in users",ng-model="room.users")
+			p 0 Users connected.
 
-		br
-		button(type="submit",ng-click="add(room)",ng-disabled="!form_add_room.$valid") Add Room
+			div(ng-switch,on="room.is_blocked")
+				div(ng-switch-when="true") restricted
+				div(ng-switch-when="false") open
+
+			a(href="#",ng-show="room._owner._id == user._id || user.is_admin") edit
+
+//- Get room by ID.
+script(id="_room",type="text/ng-template")
+	p Room by ID
+
+//-
+	Templates without Routes.
+
+//- Add Room.
+script(id="_add_room",type="text/ng-template")
+	//- Block Add Room.
+	div(ng-controller="add_room_Ctrl")
+		label Add New Room
+		form(name="form_add_room")
+			label Name
+			input(type="text",ng-model="room.name",required)
+			| required
+
+			br
+			input(type="checkbox",ng-model="room.is_blocked")
+			| Blocked?
+
+			br
+			input(type="checkbox",ng-model="room.is_show")
+			| Show?
+
+			br
+			select(multiple,ng-options="user._id as user.username for user in users",ng-model="room.users")
+
+			br
+			button(type="submit",ng-click="add(room)",ng-disabled="!form_add_room.$valid") Add Room
