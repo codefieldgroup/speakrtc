@@ -16,7 +16,7 @@ module.exports = {
    */
   get_index: function (req, res) {
     if (req.isAuthenticated()) {
-      res.redirect('/user/dashboard');
+      res.redirect('/dashboard');
     }
     else {
       res.redirect('/auth/login');

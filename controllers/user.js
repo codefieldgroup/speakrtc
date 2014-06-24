@@ -166,7 +166,7 @@ module.exports = {
    * @param req
    * @param res
    */
-  post_api_user_new: function (req, res) {
+  post_api_user_add: function (req, res) {
     var object_user = req.user;
 
     // To call to the model to add a new user.
@@ -177,7 +177,7 @@ module.exports = {
         json_return = {
           type: 'success',
           user: user,
-          msg : { msg: 'The user is added.', type: 'success' }
+          msg : { msg: 'The user <strong>' + user.email + '</strong> is added.', type: 'success' }
         };
 
         // Log.
@@ -187,8 +187,8 @@ module.exports = {
       }
       else {
         json_return = {
-          type : 'error',
-          error: error
+          type: 'error',
+          msg : error
         };
 
         // Log.

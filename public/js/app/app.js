@@ -28,6 +28,12 @@ app.config(['$routeProvider', function ($routeProvider) {
    * User Routes.
    */
 
+    // Show all users.
+    .when('/users', {
+      templateUrl: '_users',
+      controller : users_Ctrl
+    })
+
     .otherwise({
       redirectTo: '/'
     });

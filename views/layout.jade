@@ -21,10 +21,19 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 			<![endif]
 
 	body.cf-speakrtc
+		if(user)
+			p User: #{ user.username }
+				if(user.is_admin)
+					small  - ADMIN
+
 		div#cf-sidebar
 			ul
 				li
 					a(ng-href="#/rooms") Rooms
+				if (user)
+					if (user.is_admin)
+						li
+							a(ng-href="#/users") Users
 
 		//- CU: Logout.
 		if(user)

@@ -1,0 +1,62 @@
+//- Single Page of User Model.
+
+//-
+	Templates by Routes.
+
+//- List all users.
+script(id="_users",type="text/ng-template")
+	//- Include template to add user, Controller: add_user_Ctrl.
+	div(ng-include src=" '_add_user' ")
+
+	//- Block List Users.
+	br
+	div
+		label Users
+		div(style="border:1px solid red;",ng-repeat="iuser in users")
+			p {{ iuser.username }} - {{ iuser.name }} {{ iuser.last_name }}
+
+			p Created: {{ iuser.created | date:'MM/dd/yyyy h:mm:ssa' }}
+
+			div(ng-switch,on="iuser.active")
+				div(ng-switch-when="true") Active
+				div(ng-switch-when="false") Not active
+
+			a(href="#",ng-show="user.is_admin") edit
+
+//-
+	Templates without Routes.
+
+//- Add User.
+script(id="_add_user",type="text/ng-template")
+	//- Block Add User.
+	div(ng-controller="add_user_Ctrl")
+		label Add New User
+		form(name="form_add_user")
+			label Email
+			input(type="email",ng-model="user.email",required)
+			| required
+
+			br
+			label Name
+			input(type="text",ng-model="user.name",required)
+			| required
+
+			br
+			label Last Name
+			input(type="text",ng-model="user.last_name")
+
+			br
+			input(type="checkbox",ng-model="user.is_admin")
+			| Is Admin?
+
+			br
+			input(type="checkbox",ng-model="user.active")
+			| Active?
+
+			br
+			label Password
+			input(type="password",ng-model="user.password",required)
+			| required
+
+			br
+			button(type="submit",ng-click="add(user)",ng-disabled="!form_add_user.$valid") Add User

@@ -33,14 +33,14 @@ module.exports = function (app) {
   var user_route = express.Router();
 
   // Invoked for any requests passed to this router.
-  app.use('/user', user_route);
+  app.use('/dashboard', user_route);
 
   /**
    * GET request methods.
    */
 
     // HTTP Path: /user/dashboard
-  user_route.get('/dashboard', user.ensure_authenticated, user.get_dashboard);
+  user_route.get('/', user.ensure_authenticated, user.get_dashboard);
 
   /**
    * User API routes.
@@ -58,7 +58,7 @@ module.exports = function (app) {
   api_user_route.route('/')
     .get(/*TODO: Victor: user.ensure_authenticated,*/ user.get_api_users)
     .put(user.put_api_user_all)
-    .post(/*TODO: Victor: user.ensure_authenticated,*/ user.post_api_user_new)
+    .post(/*TODO: Victor: user.ensure_authenticated,*/ user.post_api_user_add)
     .delete(/*TODO: Victor: Implemented this method request to delete all users*/);
 
   // API /api/users/:user_id
