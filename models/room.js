@@ -43,16 +43,21 @@ Room.statics.list_all = function (auth_user, callback) {
 
   // Rules Filter.
   var or_filter = [];
+  var and_filter = [];
   if (!auth_user.is_admin) {
     or_filter.push(
-      {is_show: true},
       {_owner: auth_user._id},
       {users: auth_user._id}
+    );
+
+    and_filter.push(
+      {is_show: true}
     );
   }
 
   return this_model.find({})
     .or((or_filter.length > 0) ? or_filter : null)
+    .and((and_filter.length > 0) ? and_filter : null)
     .populate('_owner')
     .populate('users')
     .exec(function (error, docs) {
@@ -75,7 +80,7 @@ Room.statics.list_all = function (auth_user, callback) {
 Room.statics.add = function (room, callback) {
   var this_model = this;
 
-  return this.find({
+  return this_model.find({
     name: room.name
   }, function (error, docs) {
     if (!error) {
@@ -106,6 +111,58 @@ Room.statics.add = function (room, callback) {
       callback({ msg: error, type: 'error' }, null);
     }
   });
+};
+
+/**
+ * Get room by ID.
+ *
+ * @param auth_user
+ * @param room_id
+ * @param callback
+ * @returns {Promise}
+ */
+Room.statics.get = function (auth_user, room_id, callback) {
+  var this_model = this;
+
+  if (room_id) {
+    // Rules Filter.
+    var or_filter = [];
+    var and_filter = [];
+    if (!auth_user.is_admin) {
+      or_filter.push(
+        {_owner: auth_user._id},
+        {users: auth_user._id}
+      );
+
+      and_filter.push(
+        {is_show: true}
+      );
+    }
+
+    return this_model.findOne({
+      _id: room_id
+    })
+      .or((or_filter.length > 0) ? or_filter : null)
+      .and((and_filter.length > 0) ? and_filter : null)
+      .populate('_owner')
+      .populate('users')
+      .exec(function (error, doc) {
+        if (!error) {
+          if (doc) {
+            callback(null, doc);
+          }
+          else {
+            callback({ msg: 'You do not have access to this Room.', type: 'error' }, null);
+          }
+        }
+        else {
+          callback({ msg: error + ' - You do not have access to this page.', type: 'error' }, null);
+        }
+      });
+  }
+  else {
+    callback({ msg: 'The id of room not include.', type: 'error' }, null);
+  }
 };
 
 module.exports = mongoose.model('Room', Room);

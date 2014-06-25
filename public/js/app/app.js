@@ -15,13 +15,13 @@ app.config(['$routeProvider', function ($routeProvider) {
     // Show all rooms.
     .when('/rooms', {
       templateUrl: '_rooms',
-      controller : rooms_Ctrl
+      controller : roomsCtrl
     })
 
     // Show room by ID.
-    .when('/rooms/:id', {
+    .when('/rooms/:id/:name', {
       templateUrl: '_room',
-      controller : room_Ctrl
+      controller : roomCtrl
     })
 
   /**
@@ -31,7 +31,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     // Show all users.
     .when('/users', {
       templateUrl: '_users',
-      controller : users_Ctrl
+      controller : usersCtrl
     })
 
     .otherwise({

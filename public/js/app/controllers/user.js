@@ -12,15 +12,22 @@
  * Router:
  * .when('/users', {
  *     templateUrl: '_users',
- *     controller : users_Ctrl
+ *     controller : usersCtrl
  * })
  *
  * @param $scope
  * @param User
  */
-var users_Ctrl = function ($scope, User) {
+var usersCtrl = function ($scope, User) {
   // Get all users.
-  $scope.users = User.query();
+  User.query(function (result) {
+    if (result.type == 'success') {
+      $scope.users = result.users;
+    }
+    else {
+      flashMessageLaunch(result.msg);
+    }
+  });
 };
 
 /**
@@ -36,7 +43,7 @@ var users_Ctrl = function ($scope, User) {
  * @param $scope
  * @param User
  */
-var add_user_Ctrl = function ($scope, User) {
+var addUserCtrl = function ($scope, User) {
   $scope.user = {
     is_admin: false,
     active  : true
@@ -51,7 +58,7 @@ var add_user_Ctrl = function ($scope, User) {
     User.create({}, user, function (result) {
       if (result.type == 'success') {
         $scope.users.push(result.user);
-        flash_message_launch(result.msg);
+        flashMessageLaunch(result.msg);
 
         $scope.user = {
           is_admin : false,
@@ -69,7 +76,7 @@ var add_user_Ctrl = function ($scope, User) {
         }
       }
       else {
-        flash_message_launch(result.msg);
+        flashMessageLaunch(result.msg);
       }
     });
   }

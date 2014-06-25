@@ -11,7 +11,7 @@
  * 2 -> disconnect
  * 3 -> reconnecting
  */
-function refresh_connection_state(code) {
+function refreshConnectionState(code) {
   var $connection_state = $('#cf-connection-state');
 
   switch (code) {
@@ -39,12 +39,12 @@ function refresh_connection_state(code) {
  *
  * @param message
  */
-function flash_message_launch(message) {
+function flashMessageLaunch(message) {
   if (message.type == 'error') {
-    flash_message(message.msg, message.type);
+    flashMessage(message.msg, message.type);
   }
   if (message.type == 'success') {
-    flash_message(message.msg, message.type);
+    flashMessage(message.msg, message.type);
   }
 }
 
@@ -57,7 +57,7 @@ function flash_message_launch(message) {
  * @param image Path of image to show.
  * @param class_name Class css.
  */
-function flash_message(msg, type, sticky, image, class_name) {
+function flashMessage(msg, type, sticky, image, class_name) {
   var title = '';
   var path_default_image = '/vendors/gritter/images/023.png';
 
@@ -86,3 +86,6 @@ function flash_message(msg, type, sticky, image, class_name) {
     class_name: (class_name) ? class_name : ''
   });
 }
+
+//=====================================================
+

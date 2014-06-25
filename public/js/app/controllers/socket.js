@@ -5,16 +5,16 @@
  */
 var socket = io.connect(location.protocol + '//' + location.host);
 
-socket.on('flash message', flash_message_launch);
+socket.on('flash message', flashMessageLaunch);
 
 // Verify the connection and to show their state.
 // Open Block Ping Client.
 socket.on('connecting', function () {
-  refresh_connection_state(0);
+  refreshConnectionState(0);
 });
 
 socket.on('connect', function () {
-  refresh_connection_state(1);
+  refreshConnectionState(1);
 
   /**
    * TODO: Victor: Borrar este comentario.
@@ -24,6 +24,6 @@ socket.on('connect', function () {
 });
 
 socket.on('disconnect', function () {
-  refresh_connection_state(2);
+  refreshConnectionState(2);
 });
 // End Block Ping client.

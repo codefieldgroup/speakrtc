@@ -12,16 +12,23 @@
  * Router:
  * .when('/rooms', {
  *     templateUrl: '_rooms',
- *     controller : rooms_Ctrl
+ *     controller : roomsCtrl
  * })
  *
  * @param $scope
  * @param User
  * @param Room
  */
-var rooms_Ctrl = function ($scope, User, Room) {
+var roomsCtrl = function ($scope, User, Room) {
   // Get all rooms.
-  $scope.rooms = Room.query();
+  Room.query(function (result) {
+    if (result.type == 'success') {
+      $scope.rooms = result.rooms;
+    }
+    else {
+      flashMessageLaunch(result.msg);
+    }
+  });
 };
 
 /**
@@ -29,15 +36,29 @@ var rooms_Ctrl = function ($scope, User, Room) {
  * Router:
  * .when('/rooms/:id', {
  *     templateUrl: '_room',
- *     controller : room_Ctrl
+ *     controller : roomCtrl
  * })
  *
  * @param $scope
+ * @param $routeParams
+ * @param $location
  * @param User
  * @param Room
  */
-var room_Ctrl = function ($scope, User, Room) {
+var roomCtrl = function ($scope, $routeParams, $location, User, Room) {
 
+  Room.get({id: $routeParams.id}, function (result) {
+    if (result.type == 'success') {
+      $scope.room = result.room;
+    }
+    else {
+      result.msg.msg = 'You do not have access to room: <strong>' + $routeParams.name + '</strong>.';
+      flashMessageLaunch(result.msg);
+      $location.path('/rooms');
+    }
+  });
+
+  //my_init($routeParams.id);
 };
 
 /**
@@ -54,7 +75,7 @@ var room_Ctrl = function ($scope, User, Room) {
  * @param User
  * @param Room
  */
-var add_room_Ctrl = function ($scope, User, Room) {
+var addRoomCtrl = function ($scope, User, Room) {
   $scope.users = [];
 
   // Get all users.
@@ -74,7 +95,7 @@ var add_room_Ctrl = function ($scope, User, Room) {
     Room.create({}, room, function (result) {
       if (result.type == 'success') {
         $scope.rooms.push(result.room);
-        flash_message_launch(result.msg);
+        flashMessageLaunch(result.msg);
 
         $scope.room = {
           name      : '',
@@ -84,13 +105,12 @@ var add_room_Ctrl = function ($scope, User, Room) {
         };
 
         if (!$scope.$$phase) {
-
           // This will kickstart angular to recognize the change.
           $scope.$apply();
         }
       }
       else {
-        flash_message_launch(result.msg);
+        flashMessageLaunch(result.msg);
       }
     });
   }

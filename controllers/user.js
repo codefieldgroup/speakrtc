@@ -127,17 +127,28 @@ module.exports = {
   get_api_users: function (req, res) {
     var object_user = req.user;
 
+    var json_return = {};
     User.list_all(function (error, users) {
       if (!error) {
+        json_return = {
+          type : 'success',
+          users: users,
+          msg  : {}
+        };
+
         // Log.
         log.save('information', req.ip, req.method, 'Request to get all users, the result is: ' + users, object_user);
-        res.json(users);
       }
       else {
+        json_return = {
+          type: 'error',
+          msg : error
+        };
+
         // Log.
         log.save('error', req.ip, req.method, 'Request to get all users is failed.', object_user);
-        res.json({});
       }
+      res.json(json_return);
     });
   },
 
@@ -182,8 +193,6 @@ module.exports = {
 
         // Log.
         log.save('information', req.ip, req.method, 'added user ' + user.email + '.', object_user);
-
-        res.json(json_return);
       }
       else {
         json_return = {
@@ -193,8 +202,9 @@ module.exports = {
 
         // Log.
         log.save('error', req.ip, req.method, 'Error while added user ' + req.body.email + ' , this user not added.', object_user);
-        res.json(json_return);
       }
+
+      res.json(json_return);
     });
   }
 
