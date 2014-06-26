@@ -42,14 +42,18 @@ var roomsCtrl = function ($scope, User, Room) {
  * @param $scope
  * @param $routeParams
  * @param $location
+ * @param roomRtc
  * @param User
  * @param Room
  */
-var roomCtrl = function ($scope, $routeParams, $location, User, Room) {
+var roomCtrl = function ($scope, $routeParams, $location, roomRtc, User, Room) {
 
   Room.get({id: $routeParams.id}, function (result) {
     if (result.type == 'success') {
       $scope.room = result.room;
+
+      // Execute webrtc service.
+      roomRtc.initRoom($routeParams.id);
     }
     else {
       result.msg.msg = 'You do not have access to room: <strong>' + $routeParams.name + '</strong>.';
@@ -57,8 +61,6 @@ var roomCtrl = function ($scope, $routeParams, $location, User, Room) {
       $location.path('/rooms');
     }
   });
-
-  //my_init($routeParams.id);
 };
 
 /**
@@ -79,7 +81,11 @@ var addRoomCtrl = function ($scope, User, Room) {
   $scope.users = [];
 
   // Get all users.
-  $scope.users = User.query();
+  User.query(function (result) {
+    if (result.type == 'success') {
+      $scope.users = result.users;
+    }
+  });
 
   $scope.room = {
     is_show   : true,

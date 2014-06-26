@@ -73,7 +73,7 @@ module.exports = {
         };
 
         // Log.
-        log.save('information', req.ip, req.method, 'get room ' + room.name + ' - ' + room._id + '.', object_user);
+        log.save('information', req.ip, req.method, 'get room "' + room.name + '" - ' + room._id + '.', object_user);
       }
       else {
         json_return = {
