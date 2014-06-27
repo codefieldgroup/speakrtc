@@ -153,7 +153,7 @@ module.exports = {
           msg     : { msg: 'The room <strong>' + req.body.room_name + '</strong> accept new message chat.', type: 'success' }
         }
 
-        socket.export.sockets.emit('update chat messages', json_return);
+        socket.export.sockets.emit('update chat messages ' + req.body.room_id, json_return);
         res.json(json_return);
       }
       else {

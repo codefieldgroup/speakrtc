@@ -104,6 +104,6 @@ setInterval(function () {
     var item = waitingList.shift();
 
     $smallAdminMsg.html('<span class="label label-default">' + item.type + '</span> ' + item.msg)
-      .slideUp(500).fadeIn(400).delay(1600).hide(500);
+      .slideUp(500).fadeIn(400).delay(3000).hide(500);
   }
-}, 3000)
+}, 4000)

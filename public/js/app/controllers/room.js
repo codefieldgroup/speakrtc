@@ -68,11 +68,11 @@ var roomCtrl = function ($scope, $routeParams, $location, $http, roomRtc, User, 
   });
 
   /**
-   * Add chat function.
+   * Add message chat function.
    *
    * @param room
    */
-  $scope.addChat = function (chat) {
+  $scope.addMessageChat = function (chat) {
     var json_send = {
       room_name: roomName,
       room_id  : roomId,
@@ -87,7 +87,7 @@ var roomCtrl = function ($scope, $routeParams, $location, $http, roomRtc, User, 
       });
   };
 
-  socket.on('update chat messages', function (result) {
+  socket.on('update chat messages ' + roomId, function (result) {
     result.json_msg.created = Date.now();
     $scope.room.chats.push(result.json_msg);
 

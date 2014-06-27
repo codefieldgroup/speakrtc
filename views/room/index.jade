@@ -47,7 +47,7 @@ script(id="_room",type="text/ng-template")
 				div
 					input#cf-input-message(type="text",placeholder="Type a message here...",ngfocus,ng-model="chat.message",required)
 				div
-					button(type="submit",ng-click="addChat(chat)",onclick="jQuery('#cf-input-message').focus()",ng-disabled="!form_send_chat_text.$valid") Send
+					button(type="submit",ng-click="addMessageChat(chat)",onclick="jQuery('#cf-input-message').focus()",ng-disabled="!form_send_chat_text.$valid") Send
 
 //-
 	Templates without Routes.
