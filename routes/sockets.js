@@ -15,11 +15,15 @@ exports.socketServer = function (app, server) {
    */
   socket.sockets.on('connection', function (client) {
     console.log("New client is here!");
-
   });
 
   /**
    * EasyRTC operations.
    */
   var rtc = easyrtc.listen(app, socket);
+
+  // TODO: Victor: Borrar estas líneas comentareadas.
+  /*easyrtc.events.on('roomJoin', function (parameters) {
+    console.log(parameters.socket.id);
+  });*/
 };

@@ -6,6 +6,7 @@
 var socket = io.connect(location.protocol + '//' + location.host);
 
 socket.on('flash message', flashMessageLaunch);
+socket.on('admin notifications', adminNotifications);
 
 // Verify the connection and to show their state.
 // Open Block Ping Client.

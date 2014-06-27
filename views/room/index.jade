@@ -31,14 +31,9 @@ script(id="_room",type="text/ng-template")
 	div(ng-show="room")
 		label Room: {{ room.name }} - {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}
 
-	#otherClients
 	video#self(style="float:left",width="300",height="200")
-	video#caller(style="float:left",width="300",height="200")
-
-	#acceptCallBox(style="display:none;z-index:2;position:absolute;padding:20px;left:20px;top:150px;border:red solid 2px;background-color:pink")
-		#acceptCallLabel
-		button#callAcceptButton Accept
-		button#callRejectButton Reject
+	video#caller1(style="float:left",width="300",height="200")
+	video#caller2(style="float:left",width="300",height="200")
 
 //-
 	Templates without Routes.

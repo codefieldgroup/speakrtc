@@ -38,7 +38,7 @@ module.exports = {
         };
 
         // Log.
-        log.save('information', req.ip, req.method, 'Request to get all rooms, the result is: ' + rooms, object_user);
+        log.save('success', req.ip, req.method, 'Request to get all rooms.', object_user);
       }
       else {
         json_return = {
@@ -73,7 +73,7 @@ module.exports = {
         };
 
         // Log.
-        log.save('information', req.ip, req.method, 'get room "' + room.name + '" - ' + room._id + '.', object_user);
+        log.save('success', req.ip, req.method, 'get room "' + room.name + '" - ' + room._id + '.', object_user);
       }
       else {
         json_return = {
@@ -115,7 +115,7 @@ module.exports = {
         };
 
         // Log.
-        log.save('information', req.ip, req.method, 'added room ' + room.name + '.', object_user);
+        log.save('success', req.ip, req.method, 'added room ' + room.name + '.', object_user);
       }
       else {
         json_return = {

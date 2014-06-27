@@ -1,4 +1,21 @@
-/*=Gritter Plugin. Modificaciones.
+/*=Admin Flash Messages.
+ -------------------------------------------------------------- */
+#socket-admin-notifications {
+	height           : 20px;
+	overflow         : hidden;
+	background-color : black;
+	color            : rgb(196, 196, 196);
+	font-size        : small;
+	padding          : 1px;
+}
+
+#socket-admin-notifications .label {
+	padding       : 3px;
+	border-radius : inherit;
+	font-size     : inherit;
+}
+
+/*=Gritter Plugin. Modifications.
  -------------------------------------------------------------- */
 .cf-speakrtc .gritter-title {
 	text-shadow : inherit;

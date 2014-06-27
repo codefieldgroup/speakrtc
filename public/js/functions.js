@@ -28,7 +28,7 @@ function refreshConnectionState(code) {
       $connection_state.html('reconnecting');
       break;
   }
-}
+};
 
 /**
  * Notifications messages.
@@ -46,7 +46,7 @@ function flashMessageLaunch(message) {
   if (message.type == 'success') {
     flashMessage(message.msg, message.type);
   }
-}
+};
 
 /**
  * Generate message depending of the type.
@@ -85,7 +85,25 @@ function flashMessage(msg, type, sticky, image, class_name) {
     time      : '',
     class_name: (class_name) ? class_name : ''
   });
-}
+};
 
-//=====================================================
+/**
+ * Show messages from server to admins.
+ *
+ * @param msg
+ */
+var waitingList = [];
+function adminNotifications(msg) {
+  waitingList.push(msg);
+};
 
+setInterval(function () {
+  var $smallAdminMsg = jQuery('#socket-admin-notifications small');
+
+  if (waitingList.length > 0) {
+    var item = waitingList.shift();
+
+    $smallAdminMsg.html('<span class="label label-default">' + item.type + '</span> ' + item.msg)
+      .slideUp(500).fadeIn(400).delay(1600).hide(500);
+  }
+}, 3000)

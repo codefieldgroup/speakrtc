@@ -21,6 +21,12 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 			<![endif]
 
 	body.cf-speakrtc
+		//- Block to show messages socket only for admins.
+		if(user && user.is_admin)
+			#socket-admin-notifications
+				small(style="display:none;")
+
+		//- Block to show user logged.
 		if(user)
 			p User: #{ user.username }
 				if(user.is_admin)

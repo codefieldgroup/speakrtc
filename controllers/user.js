@@ -37,7 +37,7 @@ module.exports = {
     var object_user = req.user;
 
     // Log.
-    log.save('information', req.ip, req.method, 'Access to dashboard page.', object_user);
+    log.save('success', req.ip, req.method, 'Access to dashboard page.', object_user);
 
     res.render('user/dashboard', {
       user    : object_user,
@@ -70,7 +70,7 @@ module.exports = {
     var object_user = req.user;
 
     // Log.
-    log.save('information', req.ip, req.method, 'Logout.', object_user);
+    log.save('success', req.ip, req.method, 'Logout.', object_user);
 
     req.logout();
     res.clearCookie('client.sid', null);
@@ -91,7 +91,7 @@ module.exports = {
     var object_user = req.user;
 
     // Log.
-    log.save('information', req.ip, req.method, 'Authenticated.', object_user);
+    log.save('success', req.ip, req.method, 'Authenticated.', object_user);
 
     res.cookie('client.sid', String(object_user._id));
     res.redirect('/');
@@ -137,7 +137,7 @@ module.exports = {
         };
 
         // Log.
-        log.save('information', req.ip, req.method, 'Request to get all users, the result is: ' + users, object_user);
+        log.save('success', req.ip, req.method, 'Request to get all users.', object_user);
       }
       else {
         json_return = {
@@ -192,7 +192,7 @@ module.exports = {
         };
 
         // Log.
-        log.save('information', req.ip, req.method, 'added user ' + user.email + '.', object_user);
+        log.save('success', req.ip, req.method, 'added user ' + user.email + '.', object_user);
       }
       else {
         json_return = {
