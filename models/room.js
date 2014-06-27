@@ -9,6 +9,7 @@ var Room = new Schema({
     ref : 'User'
   },
   name      : String,
+  total     : Number,
   is_blocked: Boolean,
   is_show   : Boolean,
   users     : [
@@ -103,6 +104,7 @@ Room.statics.add = function (room, callback) {
         var new_room = new this_model({
           _owner    : room.auth_user._id,
           name      : room.name,
+          total     : room.total,
           is_blocked: room.is_blocked,
           is_show   : room.is_show,
           users     : (room.users) ? room.users : [],

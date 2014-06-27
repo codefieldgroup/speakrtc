@@ -17,8 +17,9 @@ app.service('roomRtc', ['$rootScope', function ($rootScope) {
    * Execute webrtc service.
    *
    * @param nameJoinRoom
+   * @param total
    */
-  this_service.initRoom = function (nameJoinRoom) {
+  this_service.initRoom = function (nameJoinRoom, total) {
     if (appRtc.supportsGetUserMedia() == true) {
       // Disconnecting of the App.
       //appRtc.disconnect();
@@ -30,7 +31,7 @@ app.service('roomRtc', ['$rootScope', function ($rootScope) {
       joinRoom(nameJoinRoom);
 
       appRtc.setRoomOccupantListener(roomListener);
-      appRtc.easyApp(appName, "self", ["caller1", "caller2"],
+      appRtc.easyApp(appName, "self", this_service.videoIdList(total),
         function (rtcId) {
           console.log("Successfully connected, I am ID: " + rtcId);
         },
@@ -44,6 +45,27 @@ app.service('roomRtc', ['$rootScope', function ($rootScope) {
         msg : 'This browser not supports WebRTC GetUserMedia (access to camera and microphone).',
         type: 'error'
       });
+    }
+  };
+
+  /**
+   * Generate callers list.
+   * Example:
+   * ["caller1", "caller2", "caller3", "caller4"]
+   *
+   * @param total
+   * @returns {Array}
+   */
+  this_service.videoIdList = function (total) {
+    if (total) {
+      var list = [];
+      for (var i = 1; i <= total; i++) {
+        list.push('caller' + i);
+      }
+      return list;
+    }
+    else {
+      return ["caller1", "caller2"];
     }
   };
 

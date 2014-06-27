@@ -56,9 +56,12 @@ var roomCtrl = function ($scope, $routeParams, $location, $http, roomRtc, User, 
   Room.get({id: roomId}, function (result) {
     if (result.type == 'success') {
       $scope.room = result.room;
+      $scope.tagsVideo = roomRtc.videoIdList(result.room.total);
 
-      // Execute webrtc service.
-      roomRtc.initRoom($routeParams.id);
+      setTimeout(function(){
+        // Execute webrtc service.
+        roomRtc.initRoom(roomId, result.room.total);
+      }, 100);
     }
     else {
       result.msg.msg = 'You do not have access to room: <strong>' + $routeParams.name + '</strong>.';
@@ -127,7 +130,8 @@ var addRoomCtrl = function ($scope, User, Room) {
 
   $scope.room = {
     is_show   : true,
-    is_blocked: false
+    is_blocked: false,
+    total     : 10
   };
 
   /**
@@ -144,7 +148,8 @@ var addRoomCtrl = function ($scope, User, Room) {
         $scope.room = {
           name      : '',
           is_show   : true,
-          is_blocked: false
+          is_blocked: false,
+          total     : 10
         };
 
         if (!$scope.$$phase) {

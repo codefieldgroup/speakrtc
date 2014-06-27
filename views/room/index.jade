@@ -32,8 +32,7 @@ script(id="_room",type="text/ng-template")
 		label Room: {{ room.name }} - {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}
 
 	video#self(style="float:left",width="300",height="200")
-	video#caller1(style="float:left",width="300",height="200")
-	video#caller2(style="float:left",width="300",height="200")
+	video(ng-repeat="videoId in tagsVideo",id="{{ videoId }}",style="float:left",width="300",height="200")
 
 	label Chat Room
 		ul
@@ -60,6 +59,11 @@ script(id="_add_room",type="text/ng-template")
 		form(name="form_add_room")
 			label Name
 			input(type="text",ng-model="room.name",required)
+			| required
+
+			br
+			label Total of users can connecting
+			input(type="number",ng-model="room.total",required)
 			| required
 
 			br
