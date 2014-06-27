@@ -1,4 +1,5 @@
 var express = require('express'),
+  socket = require('../routes/sockets'),
 
   user = require('../controllers/user'),
   room = require('../controllers/room'),
@@ -25,6 +26,8 @@ module.exports = function (app) {
   // Invoked for any requests passed to this router.
   app.use('/api/rooms', api_room_route);
 
+  api_room_route.post('/message', /*TODO: Victor: user.ensure_authenticated*/ room.post_add_message);
+
   // API /api/rooms
   api_room_route.route('/')
     .get(/*TODO: Victor: user.ensure_authenticated*/ room.get_api_rooms)
@@ -37,9 +40,4 @@ module.exports = function (app) {
     .get(/*TODO: Victor: user.ensure_authenticated*/ room.get_api_room)
     .put(/*TODO: Victor: Implemented this method request to update room by id*/)
     .delete(/*TODO: Victor: Implemented this method request to delete one room by id*/);
-
-  /**
-   * API SOCKETS.
-   */
-
 };

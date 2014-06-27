@@ -5,7 +5,7 @@
 
 //- List all rooms.
 script(id="_rooms",type="text/ng-template")
-	//- Include template to add room, Controller: add_room_Ctrl.
+	//- Include template to add room, Controller: addRoomCtrl.
 	div(ng-include src=" '_add_room' ")
 
 	//- Block List Rooms.
@@ -34,6 +34,20 @@ script(id="_room",type="text/ng-template")
 	video#self(style="float:left",width="300",height="200")
 	video#caller1(style="float:left",width="300",height="200")
 	video#caller2(style="float:left",width="300",height="200")
+
+	label Chat Room
+		ul
+			li(ng-repeat="chat in room.chats")
+				span {{ chat.user.name }} - {{ chat.created | date:'medium'  }}
+				br
+				span {{ chat.msg }}
+
+		form(name="form_send_chat_text")
+			div
+				div
+					input#cf-input-message(type="text",placeholder="Type a message here...",ngfocus,ng-model="chat.message",required)
+				div
+					button(type="submit",ng-click="addChat(chat)",onclick="jQuery('#cf-input-message').focus()",ng-disabled="!form_send_chat_text.$valid") Send
 
 //-
 	Templates without Routes.

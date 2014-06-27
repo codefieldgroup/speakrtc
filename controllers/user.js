@@ -134,7 +134,7 @@ module.exports = {
           type : 'success',
           users: users,
           msg  : {}
-        };
+        }
 
         // Log.
         log.save('success', req.ip, req.method, 'Request to get all users.', object_user);
@@ -143,7 +143,7 @@ module.exports = {
         json_return = {
           type: 'error',
           msg : error
-        };
+        }
 
         // Log.
         log.save('error', req.ip, req.method, 'Request to get all users is failed.', object_user);
@@ -189,7 +189,7 @@ module.exports = {
           type: 'success',
           user: user,
           msg : { msg: 'The user <strong>' + user.email + '</strong> is added.', type: 'success' }
-        };
+        }
 
         // Log.
         log.save('success', req.ip, req.method, 'added user ' + user.email + '.', object_user);
@@ -198,7 +198,7 @@ module.exports = {
         json_return = {
           type: 'error',
           msg : error
-        };
+        }
 
         // Log.
         log.save('error', req.ip, req.method, 'Error while added user ' + req.body.email + ' , this user not added.', object_user);

@@ -24,6 +24,6 @@ exports.socketServer = function (app, server) {
 
   // TODO: Victor: Borrar estas líneas comentareadas.
   /*easyrtc.events.on('roomJoin', function (parameters) {
-    console.log(parameters.socket.id);
-  });*/
+   console.log(parameters.socket.id);
+   });*/
 };

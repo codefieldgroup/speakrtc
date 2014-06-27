@@ -35,7 +35,7 @@ module.exports = {
           type : 'success',
           rooms: rooms,
           msg  : {}
-        };
+        }
 
         // Log.
         log.save('success', req.ip, req.method, 'Request to get all rooms.', object_user);
@@ -44,7 +44,7 @@ module.exports = {
         json_return = {
           type: 'error',
           msg : error
-        };
+        }
 
         // Log.
         log.save('error', req.ip, req.method, 'Request to get all rooms is failed.', object_user);
@@ -70,7 +70,7 @@ module.exports = {
           type: 'success',
           room: room,
           msg : {}
-        };
+        }
 
         // Log.
         log.save('success', req.ip, req.method, 'get room "' + room.name + '" - ' + room._id + '.', object_user);
@@ -79,7 +79,7 @@ module.exports = {
         json_return = {
           type: 'error',
           msg : error
-        };
+        }
 
         // Log.
         log.save('error', req.ip, req.method, 'While get room with ID ' + req.params.room_id + ' , this user does not have permission to access the room.', object_user);
@@ -112,7 +112,7 @@ module.exports = {
           type: 'success',
           room: room,
           msg : { msg: 'The room <strong>' + room.name + '</strong> is added.', type: 'success' }
-        };
+        }
 
         // Log.
         log.save('success', req.ip, req.method, 'added room ' + room.name + '.', object_user);
@@ -128,6 +128,44 @@ module.exports = {
       }
 
       res.json(json_return);
+    });
+  },
+
+  /**
+   * Post Add new message chat to room.
+   *
+   * @param req
+   * @param res
+   */
+  post_add_message: function (req, res, next) {
+    var object_user = req.user;
+
+    Room.add_message(object_user, req.body, function (error, json_msg) {
+      var json_return = {};
+
+      if (!error) {
+        // Log.
+        log.save('success', req.ip, req.method, 'Added message chat to room ' + req.body.room_name + '.', object_user);
+
+        json_return = {
+          type    : 'success',
+          json_msg: json_msg,
+          msg     : { msg: 'The room <strong>' + req.body.room_name + '</strong> accept new message chat.', type: 'success' }
+        }
+
+        socket.export.sockets.emit('update chat messages', json_return);
+        res.json(json_return);
+      }
+      else {
+        json_return = {
+          type: 'error',
+          msg : error
+        };
+
+        // Log.
+        log.save('error', req.ip, req.method, 'While added message chat to room ' + req.body.room_name + ' , this room not added.', object_user);
+        res.json(json_return);
+      }
     });
   }
 

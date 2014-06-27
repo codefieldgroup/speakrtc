@@ -46,9 +46,14 @@ var roomsCtrl = function ($scope, User, Room) {
  * @param User
  * @param Room
  */
-var roomCtrl = function ($scope, $routeParams, $location, roomRtc, User, Room) {
+var roomCtrl = function ($scope, $routeParams, $location, $http, roomRtc, User, Room) {
+  var roomId = $routeParams.id;
+  var roomName = $routeParams.name;
 
-  Room.get({id: $routeParams.id}, function (result) {
+  $scope.room = {};
+
+  // Get room by ID.
+  Room.get({id: roomId}, function (result) {
     if (result.type == 'success') {
       $scope.room = result.room;
 
@@ -59,6 +64,39 @@ var roomCtrl = function ($scope, $routeParams, $location, roomRtc, User, Room) {
       result.msg.msg = 'You do not have access to room: <strong>' + $routeParams.name + '</strong>.';
       flashMessageLaunch(result.msg);
       $location.path('/rooms');
+    }
+  });
+
+  /**
+   * Add chat function.
+   *
+   * @param room
+   */
+  $scope.addChat = function (chat) {
+    var json_send = {
+      room_name: roomName,
+      room_id  : roomId,
+      msg      : chat.message
+    }
+
+    $http.post('/api/rooms/message', json_send)
+      .success(function (result) {
+        if (result.type == 'error') {
+          flashMessageLaunch(result.msg);
+        }
+      });
+  };
+
+  socket.on('update chat messages', function (result) {
+    result.json_msg.created = Date.now();
+    $scope.room.chats.push(result.json_msg);
+
+    $scope.chat = {
+      message: ''
+    }
+
+    if (!$scope.$$phase) {
+      $scope.$apply();
     }
   });
 };
@@ -105,7 +143,6 @@ var addRoomCtrl = function ($scope, User, Room) {
 
         $scope.room = {
           name      : '',
-          users     : $scope.users,
           is_show   : true,
           is_blocked: false
         };
