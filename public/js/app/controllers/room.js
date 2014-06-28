@@ -51,6 +51,9 @@ var roomCtrl = function ($scope, $routeParams, $location, $http, $roomRtc, User,
   var roomName = $routeParams.name;
 
   $scope.room = {};
+  
+  // Show or hide button Disconnect or Reconnect room.
+  $scope.disconnect_reconnect = true;
 
   // Get room by ID.
   Room.get({id: roomId}, function (result) {
@@ -71,11 +74,12 @@ var roomCtrl = function ($scope, $routeParams, $location, $http, $roomRtc, User,
   });
 
   /**
-   * Hangup Room.
+   * Hangup (disconnect) Room.
    *
    * @param roomId
    */
-  $scope.hangupRoom = function(roomId) {
+  $scope.hangupRoom = function (roomId) {
+    $scope.disconnect_reconnect = false;
     $roomRtc.hangupRoom(roomId);
   };
 
@@ -84,7 +88,7 @@ var roomCtrl = function ($scope, $routeParams, $location, $http, $roomRtc, User,
    *
    * @param roomId
    */
-  $scope.reconnectRoom = function(roomId, total) {
+  $scope.reconnectRoom = function (roomId, total) {
     $roomRtc.hangupRoom(roomId);
 
     $scope.tagsVideo = $roomRtc.videoIdList(total);
@@ -93,6 +97,7 @@ var roomCtrl = function ($scope, $routeParams, $location, $http, $roomRtc, User,
       // Execute webrtc service.
       $roomRtc.initRoom(roomId, total);
     }, 100);
+    $scope.disconnect_reconnect = true;
   };
 
   /**
