@@ -39,7 +39,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     });
 }]);
 
-app.run(['$rootScope', '$http', function ($rootScope, $http) {
+app.run(['$rootScope', '$http', '$roomRtc', function ($rootScope, $http, $roomRtc) {
   // User logged.
   $rootScope.user = null;
 
@@ -49,4 +49,8 @@ app.run(['$rootScope', '$http', function ($rootScope, $http) {
         $rootScope.user = user;
       }
     });
+
+  $rootScope.$on('$routeChangeSuccess', function () {
+    $roomRtc.hangupRoom();
+  });
 }]);

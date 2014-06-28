@@ -6,7 +6,7 @@
 /**
  * Service to control of Rooms.
  */
-app.service('roomRtc', ['$rootScope', function ($rootScope) {
+app.service('$roomRtc', ['$rootScope', function ($rootScope) {
   var this_service = this;
 
   // Using "easyrtc" webrtc framework.
@@ -22,13 +22,13 @@ app.service('roomRtc', ['$rootScope', function ($rootScope) {
   this_service.initRoom = function (nameJoinRoom, total) {
     if (appRtc.supportsGetUserMedia() == true) {
       // Disconnecting of the App.
-      //appRtc.disconnect();
+      // appRtc.hangupAll();
 
       // Disconnect from all rooms connecting.
-      leaveAllRooms();
+      this_service.leaveAllRooms();
 
       // Join to Room.
-      joinRoom(nameJoinRoom);
+      this_service.joinRoom(nameJoinRoom);
 
       appRtc.setRoomOccupantListener(roomListener);
       appRtc.easyApp(appName, "self", this_service.videoIdList(total),
@@ -45,6 +45,26 @@ app.service('roomRtc', ['$rootScope', function ($rootScope) {
         msg : 'This browser not supports WebRTC GetUserMedia (access to camera and microphone).',
         type: 'error'
       });
+    }
+  };
+
+  /**
+   * Hangs up on all current connections.
+   *
+   * @param roomId
+   */
+  this_service.hangupRoom = function (roomId) {
+    if (roomId) {
+      appRtc.leaveRoom(roomId, function (roomName) {
+          console.log("Disconnected from room: " + roomName);
+        },
+        function (errorCode, errorText, roomName) {
+          console.log("Had problems leaving room: " + roomName);
+        });
+    }
+    else {
+      this_service.leaveAllRooms();
+      appRtc.hangupAll();
     }
   };
 
@@ -70,15 +90,11 @@ app.service('roomRtc', ['$rootScope', function ($rootScope) {
   };
 
   /**
-   * Private Functions.
-   */
-
-  /**
    * Join to Room by ID.
    *
    * @param nameJoinRoom
    */
-  function joinRoom(nameJoinRoom) {
+  this_service.joinRoom = function (nameJoinRoom) {
     appRtc.joinRoom(nameJoinRoom, null,
       function (roomName) {
         console.log("I'm now in room " + roomName);
@@ -91,7 +107,7 @@ app.service('roomRtc', ['$rootScope', function ($rootScope) {
   /**
    * Disconnect from all rooms connecting.
    */
-  function leaveAllRooms() {
+  this_service.leaveAllRooms = function () {
     var roomsJoined = appRtc.getRoomsJoined();
     for (var key in roomsJoined) {
       appRtc.leaveRoom(key, function (roomName) {
@@ -104,26 +120,11 @@ app.service('roomRtc', ['$rootScope', function ($rootScope) {
   };
 
   /**
-   * Get all clients of room.
-   *
-   * @param roomName
-   * @param otherPeers
-   */
-  function roomListener(roomName, otherPeers) {
-    appRtc.setRoomOccupantListener(null);
-    console.log('The room name is: ' + roomName)
-
-    for (var i in otherPeers) {
-      roomCall(i);
-    }
-  };
-
-  /**
    * Initiates a call to others users.
    *
    * @param rtcId
    */
-  function roomCall(rtcId) {
+  this_service.roomCall = function (rtcId) {
     appRtc.call(
       rtcId,
       function (rtcId) {
@@ -136,5 +137,23 @@ app.service('roomRtc', ['$rootScope', function ($rootScope) {
         console.log((accepted ? "Accepted" : "Rejected") + " by " + byWho);
       }
     );
+  };
+
+  /**
+   * Private Functions.
+   */
+
+  /**
+   * Get all clients of room.
+   *
+   * @param roomName
+   * @param otherPeers
+   */
+  function roomListener(roomName, otherPeers) {
+    appRtc.setRoomOccupantListener(null);
+
+    for (var i in otherPeers) {
+      this_service.roomCall(i);
+    }
   };
 }]);

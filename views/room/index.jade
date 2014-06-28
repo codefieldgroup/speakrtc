@@ -31,6 +31,8 @@ script(id="_room",type="text/ng-template")
 	div(ng-show="room")
 		label Room: {{ room.name }} - {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}
 
+	button(type="submit",ng-click="hangupRoom(room._id)") Hangup
+	button(type="submit",ng-click="reconnectRoom(room._id, room.total)") Reconnect
 	video#self(style="float:left",width="300",height="200")
 	video(ng-repeat="videoId in tagsVideo",id="{{ videoId }}",style="float:left",width="300",height="200")
 

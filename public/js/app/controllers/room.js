@@ -42,11 +42,11 @@ var roomsCtrl = function ($scope, User, Room) {
  * @param $scope
  * @param $routeParams
  * @param $location
- * @param roomRtc
+ * @param $roomRtc
  * @param User
  * @param Room
  */
-var roomCtrl = function ($scope, $routeParams, $location, $http, roomRtc, User, Room) {
+var roomCtrl = function ($scope, $routeParams, $location, $http, $roomRtc, User, Room) {
   var roomId = $routeParams.id;
   var roomName = $routeParams.name;
 
@@ -56,11 +56,11 @@ var roomCtrl = function ($scope, $routeParams, $location, $http, roomRtc, User, 
   Room.get({id: roomId}, function (result) {
     if (result.type == 'success') {
       $scope.room = result.room;
-      $scope.tagsVideo = roomRtc.videoIdList(result.room.total);
+      $scope.tagsVideo = $roomRtc.videoIdList(result.room.total);
 
-      setTimeout(function(){
+      setTimeout(function () {
         // Execute webrtc service.
-        roomRtc.initRoom(roomId, result.room.total);
+        $roomRtc.initRoom(roomId, result.room.total);
       }, 100);
     }
     else {
@@ -69,6 +69,31 @@ var roomCtrl = function ($scope, $routeParams, $location, $http, roomRtc, User, 
       $location.path('/rooms');
     }
   });
+
+  /**
+   * Hangup Room.
+   *
+   * @param roomId
+   */
+  $scope.hangupRoom = function(roomId) {
+    $roomRtc.hangupRoom(roomId);
+  };
+
+  /**
+   * Reconnect Room.
+   *
+   * @param roomId
+   */
+  $scope.reconnectRoom = function(roomId, total) {
+    $roomRtc.hangupRoom(roomId);
+
+    $scope.tagsVideo = $roomRtc.videoIdList(total);
+
+    setTimeout(function () {
+      // Execute webrtc service.
+      $roomRtc.initRoom(roomId, total);
+    }, 100);
+  };
 
   /**
    * Add message chat function.
@@ -131,7 +156,7 @@ var addRoomCtrl = function ($scope, User, Room) {
   $scope.room = {
     is_show   : true,
     is_blocked: false,
-    total     : 10
+    total     : 4
   };
 
   /**
@@ -149,7 +174,7 @@ var addRoomCtrl = function ($scope, User, Room) {
           name      : '',
           is_show   : true,
           is_blocked: false,
-          total     : 10
+          total     : 4
         };
 
         if (!$scope.$$phase) {
