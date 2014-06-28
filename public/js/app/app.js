@@ -39,7 +39,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     });
 }]);
 
-app.run(['$rootScope', '$http', '$roomRtc', function ($rootScope, $http, $roomRtc) {
+app.run(['$rootScope', '$http', '$location', '$roomRtc', function ($rootScope, $http, $location, $roomRtc) {
   // User logged.
   $rootScope.user = null;
 
@@ -55,5 +55,8 @@ app.run(['$rootScope', '$http', '$roomRtc', function ($rootScope, $http, $roomRt
 
   $rootScope.$on('$routeChangeSuccess', function () {
     $roomRtc.hangupRoom();
+
+    // Refresh menu page with current path.
+    $rootScope.pathLocation = $location.path();
   });
 }]);

@@ -1,3 +1,53 @@
+/*=General HTML.
+ -------------------------------------------------------------- */
+html,
+body {
+	overflow-x : hidden; /* Prevent scroll on narrow devices */
+}
+
+body {
+	padding-top : 70px;
+}
+
+footer {
+	padding : 30px 0;
+}
+
+/*=Header Page.
+ -------------------------------------------------------------- */
+.cf-navbar {
+	min-height    : 30px;
+	margin-bottom : 0px;
+	margin-top    : 20px;
+}
+
+.cf-navbar-nav > li > a {
+	line-height : 5px;
+}
+
+.cf-navbar-brand {
+	padding     : 5px 5px;
+	line-height : 3px;
+}
+
+/* Phone */
+.cf-navbar-toggle {
+	padding       : 4px 10px;
+	margin-top    : 5px;
+	margin-bottom : 3px;
+	border        : 0px solid transparent;
+	border-radius : 0px;
+}
+
+.cf-navbar-toggle .icon-bar {
+	height : 3px;
+}
+
+.cf-state-badge {
+	font-size     : inherit;
+	border-radius : 0px;
+}
+
 /*=Admin Flash Messages.
  -------------------------------------------------------------- */
 #socket-admin-notifications {
@@ -6,7 +56,11 @@
 	background-color : black;
 	color            : rgb(196, 196, 196);
 	font-size        : small;
-	padding          : 1px;
+	padding          : 2px;
+}
+
+#socket-admin-notifications small {
+	margin-left : -11px;
 }
 
 #socket-admin-notifications .label {

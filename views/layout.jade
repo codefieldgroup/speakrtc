@@ -5,7 +5,11 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 			title {{ title }}
 
 		meta(charset="utf-8")
+		meta(http-equiv="X-UA-Compatible",content="IE=edge")
 		meta(name="viewport",content="width=device-width, initial-scale=1.0")
+		meta(name="description",content="")
+		meta(name="author",content="")
+		link(rel="shortcut icon",href="/img/favicon.png")
 
 		include styles
 
@@ -21,32 +25,45 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 			<![endif]
 
 	body.cf-speakrtc
-		//- Block to show messages socket only for admins.
-		if(user && user.is_admin)
-			#socket-admin-notifications
-				small(style="display:none;")
-
-		//- Block to show user logged.
 		if(user)
-			p User: #{ user.username }
-				if(user.is_admin)
-					small  - ADMIN
+			//- Block to show messages socket only for admins.
+			if(user.is_admin)
+				#socket-admin-notifications.navbar-fixed-top
+					.container
+						small(style="display:none;")
 
-		div#cf-sidebar
-			ul
-				li
-					a(ng-href="#/rooms") Rooms
-				if (user)
-					if (user.is_admin)
-						li
-							a(ng-href="#/users") Users
+			.cf-navbar.navbar.navbar-fixed-top.navbar-default(role="navigation")
+				.container.cf-container
+					.navbar-header
+						button.cf-navbar-toggle.navbar-toggle(type="button",data-toggle="collapse",data-target=".navbar-collapse")
+							span.sr-only Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a.cf-navbar-brand.navbar-brand(href="/") Speak
+							//- CU: Verify the connection and to show their state.
+							span#cf-connection-state.cf-state-badge.badge disconnected
 
-		//- CU: Logout.
-		if(user)
-			a(href="/auth/logout") Logout
+					.collapse.navbar-collapse
+						ul.nav.cf-navbar-nav.navbar-nav
+							li(ng-class="{'/rooms':'active', false:''}[pathLocation]")
+								a(ng-href="#/rooms") Rooms
+							if (user.is_admin)
+								li(ng-class="{'/users':'active', false:''}[pathLocation]")
+									a(ng-href="#/users") Users
 
-		//- CU: Verify the connection and to show their state.
-		span.label.label-default#cf-connection-state Disconnected
+						//- Block to show user logged.
+						ul.nav.cf-navbar-nav.navbar-nav.navbar-right
+							li.dropdown
+								a.dropdown-toggle(href="#",data-toggle="dropdown")
+									strong #{ user.username }
+									if(user.is_admin)
+										small  - ADMIN
+									b.caret
+								ul.dropdown-menu
+									li
+										//- CU: Logout.
+										a(href="/auth/logout") Logout
 
 		block content
 

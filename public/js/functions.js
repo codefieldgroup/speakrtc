@@ -16,16 +16,24 @@ function refreshConnectionState(code) {
 
   switch (code) {
     case 0:
-      $connection_state.html('connecting');
+      $connection_state
+        .html('connecting')
+        .css('background-color', '#0b6e8b');
       break;
     case 1:
-      $connection_state.html('connect');
+      $connection_state
+        .html('connect')
+        .css('background-color', '#447a44');
       break;
     case 2:
-      $connection_state.html('disconnect');
+      $connection_state
+        .html('disconnect')
+        .css('background-color', '#be3935');
       break;
     case 3:
-      $connection_state.html('reconnecting');
+      $connection_state
+        .html('reconnecting')
+        .css('background-color', '#c7790a');
       break;
   }
 };
