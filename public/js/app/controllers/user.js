@@ -16,9 +16,12 @@
  * })
  *
  * @param $scope
+ * @param $rootScope
  * @param User
  */
-var usersCtrl = function ($scope, User) {
+var usersCtrl = function ($scope, $rootScope, User) {
+  $rootScope.title = 'SpeakRTC: Users';
+
   // Get all users.
   User.query(function (result) {
     if (result.type == 'success') {

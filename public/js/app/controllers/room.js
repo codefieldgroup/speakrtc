@@ -16,10 +16,13 @@
  * })
  *
  * @param $scope
+ * @param $rootScope
  * @param User
  * @param Room
  */
-var roomsCtrl = function ($scope, User, Room) {
+var roomsCtrl = function ($scope, $rootScope, User, Room) {
+  $rootScope.title = 'SpeakRTC: Rooms';
+
   // Get all rooms.
   Room.query(function (result) {
     if (result.type == 'success') {
@@ -40,13 +43,14 @@ var roomsCtrl = function ($scope, User, Room) {
  * })
  *
  * @param $scope
+ * @param $rootScope
  * @param $routeParams
  * @param $location
  * @param $roomRtc
  * @param User
  * @param Room
  */
-var roomCtrl = function ($scope, $routeParams, $location, $http, $roomRtc, User, Room) {
+var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $roomRtc, User, Room) {
   var roomId = $routeParams.id;
   var roomName = $routeParams.name;
 
@@ -59,6 +63,7 @@ var roomCtrl = function ($scope, $routeParams, $location, $http, $roomRtc, User,
   Room.get({id: roomId}, function (result) {
     if (result.type == 'success') {
       $scope.room = result.room;
+      $rootScope.title = 'SpeakRTC: Room - ' + result.room.name;
       $scope.tagsVideo = $roomRtc.videoIdList(result.room.total);
 
       setTimeout(function () {

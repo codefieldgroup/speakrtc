@@ -43,6 +43,9 @@ app.run(['$rootScope', '$http', '$roomRtc', function ($rootScope, $http, $roomRt
   // User logged.
   $rootScope.user = null;
 
+  // Set title of pages (html-tag title).
+  $rootScope.title = 'SpeakRTC: Welcome';
+
   $http.get('/api/users/auth')
     .success(function (user, status) {
       if (user && status == 200) {
