@@ -6,12 +6,14 @@ block assets
 block content
 	.container
 		form.form-signin(role="form",action="/auth/login",method="post")
-			h2.form-signin-heading Please sign in
+			h2.form-signin-heading Speak
+				//- CU: Verify the connection and to show their state.
+				span#cf-connection-state.cf-state-badge.badge disconnected
 			if code == 1
 				span(class="label label-danger") Bad credentials.
-			input.form-control(type="text",placeholder="Email address",name="username",required autofocus)
-			input.form-control(type="password",placeholder="Password",name="password",required)
+			input.cf-form-control.form-control(type="text",placeholder="Email address",name="username",required autofocus)
+			input.cf-form-control.form-control(type="password",placeholder="Password",name="password",required)
 			label.checkbox
 				input(type="checkbox",value="remember-me")
 				| Remember me
-			button.btn.btn-lg.btn-primary.btn-block(type="submit") Sign in
+			button.btn.btn-lg.cf-btn-success.btn-success.btn-block(type="submit") Sign in

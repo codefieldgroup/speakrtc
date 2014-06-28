@@ -44,3 +44,13 @@ body {
 	border-top-left-radius  : 0;
 	border-top-right-radius : 0;
 }
+
+.cf-form-control {
+	border-radius : 0px;
+}
+
+.cf-btn-success {
+	background-color : #447a44;
+	border-color     : #447a44;
+	border-radius    : 0px;
+}
