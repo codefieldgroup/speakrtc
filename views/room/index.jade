@@ -31,10 +31,19 @@ script(id="_room",type="text/ng-template")
 	div(ng-show="room")
 		label Room: {{ room.name }} - {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}
 
-	button(type="submit",ng-click="hangupRoom(room._id)",ng-show="disconnect_reconnect") Disconnect
-	button(type="submit",ng-click="reconnectRoom(room._id, room.total)",ng-show="!disconnect_reconnect") Reconnect
-	video#self(style="float:left",width="300",height="200")
-	video(ng-repeat="videoId in tagsVideo",id="{{ videoId }}",style="float:left",width="300",height="200")
+	div(ng-show="roomOptions.buttons")
+		button(type="submit",ng-click="disconnectRoom(room._id)",ng-show="roomOptions.connect") Disconnect
+		button(type="submit",ng-click="reconnectRoom(room._id, room.total)",ng-show="!roomOptions.connect") Reconnect
+	#self-video
+		video#self(style="float:left",width="300",height="200")
+		div(ng-show="roomOptions.buttons")
+			button(type="submit",ng-click="enableCamera(false)",ng-show="cameraOptions.enable") Disable Camera
+			button(type="submit",ng-click="enableCamera(true)",ng-show="!cameraOptions.enable") Enable Camera
+
+	#callers
+		div(ng-repeat="videoId in tagsVideo")
+			video(id="{{ videoId }}",style="display:none;float:left;",width="300",height="200")
+
 
 	label Chat Room
 		ul

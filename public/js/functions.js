@@ -31,6 +31,24 @@ function refreshConnectionState(code) {
 };
 
 /**
+ * When client connect to room then show video tab him.
+ */
+function showActiveVideo() {
+  var $callers = $('#callers video');
+  $callers.each(function () {
+    var $this = $(this);
+    var dataCaller = $this.attr('data-caller');
+
+    if (dataCaller != '') {
+      $this.show("slow");
+    }
+    else {
+      $this.hide();
+    }
+  });
+};
+
+/**
  * Notifications messages.
  */
 
