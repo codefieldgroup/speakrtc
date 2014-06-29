@@ -160,6 +160,37 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
       });
   };
 
+  /**
+   * Set fullscreen video tag of some client.
+   *
+   * @param videoId
+   * @param fullscreen
+   */
+  $scope.fullscreen = function (videoId, fullscreen) {
+    if (videoId) {
+      var $caller = $('#client-' + videoId + ' video');
+      var $buttonFull = $caller.siblings().eq(0);
+      var $buttonNotFull = $caller.siblings().eq(1);
+
+      if (fullscreen) {
+        $caller.css({
+          'height': '100%',
+          'width' : '100%'
+        });
+        $buttonFull.hide();
+        $buttonNotFull.show();
+      }
+      else {
+        $caller.css({
+          'height': '',
+          'width' : ''
+        });
+        $buttonFull.show();
+        $buttonNotFull.hide();
+      }
+    }
+  };
+
   $socket.on('update chat messages ' + roomId, function (result) {
     result.json_msg.created = Date.now();
     $scope.room.chats.push(result.json_msg);
@@ -175,7 +206,7 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
 
   $socket.on('notification new user room ' + roomId, function () {
     setTimeout(function () {
-      showActiveVideo();
+      //showActiveVideo();
     }, 1000);
   });
 };
