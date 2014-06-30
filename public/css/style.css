@@ -48,6 +48,11 @@ footer {
 	border-radius : 0px;
 }
 
+video {
+	width  : inherit;
+	height : inherit;
+}
+
 /*=Admin Flash Messages.
  -------------------------------------------------------------- */
 #socket-admin-notifications {

@@ -117,11 +117,11 @@ setInterval(function () {
   }
 
   // Show tags video when capture signal from others users.
-  var $callers = $('#callers video');
+  var $callers = $('#callers .cf-client');
 
   $callers.each(function () {
     var $this = $(this);
-    var dataCaller = $this.attr('data-caller');
+    var dataCaller = $this.find('video').attr('data-caller');
     (dataCaller != '') ? $this.show("slow") : $this.hide();
   });
 }, 4000)
