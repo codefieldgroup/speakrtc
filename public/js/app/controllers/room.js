@@ -172,7 +172,7 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
    */
   $scope.fullscreen = function (videoId, fullscreen) {
     if (videoId) {
-      var $caller = $('#client-' + videoId + ' video');
+      var $caller = $('#client-' + videoId);
       var $buttonFull = $caller.siblings().eq(0);
       var $buttonNotFull = $caller.siblings().eq(1);
 
