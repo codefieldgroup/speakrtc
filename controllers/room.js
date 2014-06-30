@@ -183,7 +183,7 @@ module.exports = {
    */
   new_user_room: function (io, client, data) {
     if (data) {
-      socket.export.sockets.emit('notification new user room ' + data.room_id);
+      socket.export.sockets.emit('notification new user room ' + data.room_id, data);
     }
   }
 };

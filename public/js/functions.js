@@ -31,24 +31,6 @@ function refreshConnectionState(code) {
 };
 
 /**
- * When client connect to room then show video tab him.
- */
-function showActiveVideo() {
-  var $callers = $('#callers video');
-  $callers.each(function () {
-    var $this = $(this);
-    var dataCaller = $this.attr('data-caller');
-
-    if (dataCaller != '') {
-      $this.show("slow");
-    }
-    else {
-      $this.hide();
-    }
-  });
-};
-
-/**
  * Notifications messages.
  */
 
@@ -116,6 +98,7 @@ function adminNotifications(msg) {
 };
 
 setInterval(function () {
+  // Show notifications messages to admin.
   var $smallAdminMsg = jQuery('#socket-admin-notifications small');
 
   if (waitingList.length > 0) {
@@ -124,4 +107,13 @@ setInterval(function () {
     $smallAdminMsg.html('<span class="label label-default">' + item.type + '</span> ' + item.msg)
       .slideUp(500).fadeIn(400).delay(3000).hide(500);
   }
+
+  // Show tags video when capture signal from others users.
+  var $callers = $('#callers video');
+
+  $callers.each(function () {
+    var $this = $(this);
+    var dataCaller = $this.attr('data-caller');
+    (dataCaller != '') ? $this.show("slow") : $this.hide();
+  });
 }, 4000)
