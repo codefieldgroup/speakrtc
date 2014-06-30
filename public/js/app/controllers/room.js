@@ -50,14 +50,25 @@ var roomsCtrl = function ($scope, $rootScope, User, Room) {
  * @param User
  * @param Room
  */
-var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $roomRtc, User, Room) {
+var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $roomRtc, $socket, User, Room) {
   var roomId = $routeParams.id;
   var roomName = $routeParams.name;
 
   $scope.room = {};
-  
-  // Show or hide button Disconnect or Reconnect room.
-  $scope.disconnect_reconnect = true;
+
+  // Room options.
+  $scope.roomOptions = {
+    // Show or hide button Disconnect or Reconnect room.
+    connect: true,
+    buttons: false
+  };
+
+  // Camera options.
+  $scope.cameraOptions = {
+    // Enable / Disable Camera.
+    enable    : true,
+    fullscreen: false
+  };
 
   // Get room by ID.
   Room.get({id: roomId}, function (result) {
@@ -68,7 +79,21 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
 
       setTimeout(function () {
         // Execute webrtc service.
-        $roomRtc.initRoom(roomId, result.room.total);
+        $roomRtc.initRoom(roomId, result.room.total, function (result) {
+          if (result.type == 'success') {
+            $scope.roomOptions.buttons = true;
+            $socket.emit('new user room', {
+              room_id: $scope.room._id
+            });
+          }
+          else {
+            $scope.roomOptions.buttons = false;
+          }
+
+          if (!$scope.$$phase) {
+            $scope.$apply();
+          }
+        });
       }, 100);
     }
     else {
@@ -83,8 +108,8 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
    *
    * @param roomId
    */
-  $scope.hangupRoom = function (roomId) {
-    $scope.disconnect_reconnect = false;
+  $scope.disconnectRoom = function (roomId) {
+    $scope.roomOptions.connect = false;
     $roomRtc.hangupRoom(roomId);
   };
 
@@ -102,7 +127,17 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
       // Execute webrtc service.
       $roomRtc.initRoom(roomId, total);
     }, 100);
-    $scope.disconnect_reconnect = true;
+    $scope.roomOptions.connect = true;
+  };
+
+  /**
+   * Enable/Disable Camera.
+   *
+   * @param enable
+   */
+  $scope.enableCamera = function (enable) {
+    $roomRtc.enableCamera(enable);
+    $scope.cameraOptions.enable = enable;
   };
 
   /**
@@ -125,7 +160,38 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
       });
   };
 
-  socket.on('update chat messages ' + roomId, function (result) {
+  /**
+   * Set fullscreen video tag of some client.
+   *
+   * @param videoId
+   * @param fullscreen
+   */
+  $scope.fullscreen = function (videoId, fullscreen) {
+    if (videoId) {
+      var $caller = $('#client-' + videoId + ' video');
+      var $buttonFull = $caller.siblings().eq(0);
+      var $buttonNotFull = $caller.siblings().eq(1);
+
+      if (fullscreen) {
+        $caller.css({
+          'height': '100%',
+          'width' : '100%'
+        });
+        $buttonFull.hide();
+        $buttonNotFull.show();
+      }
+      else {
+        $caller.css({
+          'height': '',
+          'width' : ''
+        });
+        $buttonFull.show();
+        $buttonNotFull.hide();
+      }
+    }
+  };
+
+  $socket.on('update chat messages ' + roomId, function (result) {
     result.json_msg.created = Date.now();
     $scope.room.chats.push(result.json_msg);
 
@@ -136,6 +202,12 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
     if (!$scope.$$phase) {
       $scope.$apply();
     }
+  });
+
+  $socket.on('notification new user room ' + roomId, function () {
+    setTimeout(function () {
+      //showActiveVideo();
+    }, 1000);
   });
 };
 

@@ -19,7 +19,7 @@ app.service('$roomRtc', ['$rootScope', function ($rootScope) {
    * @param nameJoinRoom
    * @param total
    */
-  this_service.initRoom = function (nameJoinRoom, total) {
+  this_service.initRoom = function (nameJoinRoom, total, callback) {
     if (appRtc.supportsGetUserMedia() == true) {
       // Disconnecting of the App.
       // appRtc.hangupAll();
@@ -33,10 +33,13 @@ app.service('$roomRtc', ['$rootScope', function ($rootScope) {
       appRtc.setRoomOccupantListener(roomListener);
       appRtc.easyApp(appName, "self", this_service.videoIdList(total),
         function (rtcId) {
+          flashMessageLaunch({msg: "Successfully connected to room: " + nameJoinRoom, type: 'success'});
           console.log("Successfully connected, I am ID: " + rtcId);
+          callback({type: 'success'});
         },
         function (errorCode, errorText) {
-          console.log(errorText);
+          flashMessageLaunch({msg: errorText, type: 'error'});
+          callback({type: 'error'});
         }
       );
     }
@@ -56,16 +59,28 @@ app.service('$roomRtc', ['$rootScope', function ($rootScope) {
   this_service.hangupRoom = function (roomId) {
     if (roomId) {
       appRtc.leaveRoom(roomId, function (roomName) {
-          console.log("Disconnected from room: " + roomName);
+          flashMessageLaunch({msg: "Disconnected from room: " + roomName, type: 'warning'});
         },
         function (errorCode, errorText, roomName) {
-          console.log("Had problems leaving room: " + roomName);
+          flashMessageLaunch({msg: "Had problems leaving room: " + roomName, type: 'error'});
         });
     }
     else {
       this_service.leaveAllRooms();
       appRtc.hangupAll();
     }
+  };
+
+  /**
+   * Enable/Disable Camera Service.
+   *
+   * @param enable
+   */
+  this_service.enableCamera = function (enable) {
+    appRtc.enableCamera(enable);
+    (enable == true)
+      ? flashMessageLaunch({msg: 'Enable camera. All users of room see you.', type: 'success'})
+      : flashMessageLaunch({msg: 'Disable camera. The users of the room cannot see you.', type: 'success'});
   };
 
   /**
@@ -97,10 +112,10 @@ app.service('$roomRtc', ['$rootScope', function ($rootScope) {
   this_service.joinRoom = function (nameJoinRoom) {
     appRtc.joinRoom(nameJoinRoom, null,
       function (roomName) {
-        console.log("I'm now in room " + roomName);
+        flashMessageLaunch({msg: "You are now in room " + roomName, type: 'success'});
       },
       function (errorCode, errorText, roomName) {
-        console.log("Had problems joining " + roomName);
+        flashMessageLaunch({msg: "Had problems joining " + roomName, type: 'error'});
       });
   };
 

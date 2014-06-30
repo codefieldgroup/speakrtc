@@ -167,9 +167,23 @@ module.exports = {
         res.json(json_return);
       }
     });
-  }
+  },
 
   /**
    * API SOCKETS.
    */
+
+  /**
+   * Get when user connect in room and send notification to
+   * others clients of same room.
+   *
+   * @param io
+   * @param client
+   * @param data
+   */
+  new_user_room: function (io, client, data) {
+    if (data) {
+      socket.export.sockets.emit('notification new user room ' + data.room_id);
+    }
+  }
 };

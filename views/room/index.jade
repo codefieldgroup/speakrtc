@@ -31,10 +31,20 @@ script(id="_room",type="text/ng-template")
 	div(ng-show="room")
 		label Room: {{ room.name }} - {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}
 
-	button(type="submit",ng-click="hangupRoom(room._id)",ng-show="disconnect_reconnect") Disconnect
-	button(type="submit",ng-click="reconnectRoom(room._id, room.total)",ng-show="!disconnect_reconnect") Reconnect
-	video#self(style="float:left",width="300",height="200")
-	video(ng-repeat="videoId in tagsVideo",id="{{ videoId }}",style="float:left",width="300",height="200")
+	div(ng-show="roomOptions.buttons")
+		button(type="submit",ng-click="disconnectRoom(room._id)",ng-show="roomOptions.connect") Disconnect
+		button(type="submit",ng-click="reconnectRoom(room._id, room.total)",ng-show="!roomOptions.connect") Reconnect
+	#self-video
+		video#self(style="float:left;border: 1px solid blue;",width="300",height="200")
+		div(ng-show="roomOptions.buttons")
+			button(type="submit",ng-click="enableCamera(false)",ng-show="cameraOptions.enable") Disable Camera
+			button(type="submit",ng-click="enableCamera(true)",ng-show="!cameraOptions.enable") Enable Camera
+
+	#callers
+		div(ng-repeat="videoId in tagsVideo",id="client-{{ videoId }}")
+			video(id="{{ videoId }}",style="float:left;border: 1px solid red;",width="300",height="200")
+			button.full(type="submit",ng-click="fullscreen(videoId, true)") Fullscreen
+			button.not-full(type="submit",ng-click="fullscreen(videoId, false)",style="display:none;") Not Fullscreen
 
 	label Chat Room
 		ul

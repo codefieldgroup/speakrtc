@@ -1,5 +1,7 @@
 var io = require('socket.io'),
-  easyrtc = require("easyrtc");
+  easyrtc = require("easyrtc"),
+
+  room = require('../controllers/room');
 
 exports.socketServer = function (app, server) {
   var socket = io.listen(server);
@@ -15,6 +17,10 @@ exports.socketServer = function (app, server) {
    */
   socket.sockets.on('connection', function (client) {
     console.log("New client is here!");
+
+    client.on('new user room', function (data) {
+      room.new_user_room(io, client, data);
+    });
   });
 
   /**
