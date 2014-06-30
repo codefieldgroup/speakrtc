@@ -42,7 +42,7 @@ script(id="_room",type="text/ng-template")
 
 	#callers
 		div(ng-repeat="videoId in tagsVideo",id="client-{{ videoId }}")
-			video(id="{{ videoId }}",style="float:left;border: 1px solid red;",width="300",height="200")
+			video(id="{{ videoId }}",style="display:none;float:left;border: 1px solid red;",width="300",height="200")
 			button.full(type="submit",ng-click="fullscreen(videoId, true)") Fullscreen
 			button.not-full(type="submit",ng-click="fullscreen(videoId, false)",style="display:none;") Not Fullscreen
 

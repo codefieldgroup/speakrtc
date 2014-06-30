@@ -83,7 +83,11 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
           if (result.type == 'success') {
             $scope.roomOptions.buttons = true;
             $socket.emit('new user room', {
-              room_id: $scope.room._id
+              room_id: $scope.room._id,
+              user   : {
+                email: $rootScope.user.email,
+                name : $rootScope.user.name
+              }
             });
           }
           else {
@@ -204,11 +208,10 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
     }
   });
 
-  $socket.on('notification new user room ' + roomId, function () {
-    setTimeout(function () {
-      //showActiveVideo();
-    }, 1000);
-  });
+  /**
+   * Notification when other users connect to this room.
+   */
+  $socket.on('notification new user room ' + roomId, function (result) {});
 };
 
 /**
