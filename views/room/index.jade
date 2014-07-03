@@ -5,26 +5,26 @@
 
 //- List all rooms.
 script(id="_rooms",type="text/ng-template")
-	//- Include template to add room, Controller: addRoomCtrl.
-	div(ng-include src=" '_add_room' ")
-
 	//- Block List Rooms.
-	br
-	div
-		label Rooms
-		div(style="border:1px solid red;",ng-repeat="room in rooms")
-			p {{ room.name }}
-				a(ng-href="#/rooms/{{ room._id }}/{{ room.name }}")  | Access
+	.col-lg-8.col-md-8.col-sm-8.col-xs-12
+		.col-lg-12
+			h5.cf-title
+				strong Rooms.
 
-			p Created: {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}
+		.col-lg-4.col-md-4.col-sm-4.col-xs-12.cf-client(ng-repeat="room in rooms")
+			.panel.panel-default
+				.panel-heading
+					h3.panel-title
+						span.glyphicon.glyphicon-facetime-video
+						a(ng-href="#/rooms/{{ room._id }}/{{ room.name }}")   {{ room.name }}
+						small.text-muted(style="float: right;")  {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}
+				.panel-body
+					div(ng-switch,on="room.is_blocked")
+						div(ng-switch-when="true",style="color:#a94442;") restricted
+						div(ng-switch-when="false",style="color:rgb(68, 122, 68);") open
 
-			p 0 Users connected.
-
-			div(ng-switch,on="room.is_blocked")
-				div(ng-switch-when="true") restricted
-				div(ng-switch-when="false") open
-
-			a(href="#",ng-show="room._owner._id == user._id || user.is_admin") edit
+	//- Include template to add room, Controller: addRoomCtrl.
+	.col-lg-4.col-md-4.col-sm-4.col-xs-12(ng-include src=" '_add_room' ")
 
 //- Get room by ID.
 script(id="_room",type="text/ng-template")
@@ -95,28 +95,33 @@ script(id="_room",type="text/ng-template")
 //- Add Room.
 script(id="_add_room",type="text/ng-template")
 	//- Block Add Room.
-	div(ng-controller="addRoomCtrl")
-		label Add New Room
-		form(name="form_add_room")
-			label Name
-			input(type="text",ng-model="room.name",required)
-			| required
+	.col-lg-12
+		h5.cf-title
+			strong Add New Room.
 
-			br
-			label Total of users can connecting
-			input(type="number",ng-model="room.total",required)
-			| required
+	.col-lg-12
+		form(role="form",name="form_add_room",ng-controller="addRoomCtrl")
+			.form-group
+				label Name*
+				input.form-control.input-sm(type="text",ng-model="room.name",required)
 
-			br
-			input(type="checkbox",ng-model="room.is_blocked")
-			| Blocked?
+			.form-group
+				label Total of users can connecting*
+				input.form-control.input-sm(type="number",ng-model="room.total",required)
 
-			br
-			input(type="checkbox",ng-model="room.is_show")
-			| Show?
+			.checkbox
+				label
+					input(type="checkbox",ng-model="room.is_blocked")
+					| Blocked?
 
-			br
-			select(multiple,ng-options="user._id as user.username for user in users",ng-model="room.users")
+			.checkbox
+				label
+					input(type="checkbox",ng-model="room.is_show")
+					| Show?
 
-			br
-			button(type="submit",ng-click="add(room)",ng-disabled="!form_add_room.$valid") Add Room
+			.form-group
+				label Allow users*
+				select.form-control(multiple,ng-options="user._id as user.username for user in users",ng-model="room.users")
+
+			.form-group
+				button.btn.btn-default(type="submit",ng-click="add(room)",ng-disabled="!form_add_room.$valid") Add Room
