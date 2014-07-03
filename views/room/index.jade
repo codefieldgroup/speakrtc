@@ -76,8 +76,13 @@ script(id="_room",type="text/ng-template")
 		.col-lg-12
 			.cf-panel-body
 				.cf-chats
+					.input-group.input-group-sm
+						span.input-group-addon
+							span.glyphicon.glyphicon-search
+						input.form-control.input-sm(type="text",ng-model="filterName",placeholder="Search ...")
+
 					ul
-						li(ng-repeat="chat in room.chats")
+						li(ng-repeat="chat in room.chats | filter: filterName")
 							a.cf-name(href="#") {{ chat.user.name }}
 							span.cf-datetime  at {{ chat.created | date:'medium'  }}
 							br
