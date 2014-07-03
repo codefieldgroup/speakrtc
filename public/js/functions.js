@@ -96,6 +96,21 @@ function flashMessage(msg, type, sticky, image, class_name) {
 };
 
 /**
+ * Refresh ul tag chat and ubicate in last li tag.
+ */
+var offset = 0;
+function scrollChatBox() {
+  var $ulMessages = $('.cf-chats ul');
+  var $ulLastLi = $('.cf-chats ul li:last');
+
+  offset = (offset == 0) ? $ulLastLi.offset().top : $ulLastLi.offset().top + offset;
+
+  setTimeout(function () {
+    $ulMessages.scrollTop(offset)
+  }, 10)
+};
+
+/**
  * Show messages from server to admins.
  *
  * @param msg
@@ -117,11 +132,11 @@ setInterval(function () {
   }
 
   // Show tags video when capture signal from others users.
-  var $callers = $('#callers .cf-client');
+  var $callers = $('.cf-client');
 
   $callers.each(function () {
     var $this = $(this);
     var dataCaller = $this.find('video').attr('data-caller');
     (dataCaller != '') ? $this.show("slow") : $this.hide();
   });
-}, 4000)
+}, 4000);

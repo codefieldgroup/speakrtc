@@ -46,7 +46,9 @@ var roomsCtrl = function ($scope, $rootScope, User, Room) {
  * @param $rootScope
  * @param $routeParams
  * @param $location
+ * @param $http
  * @param $roomRtc
+ * @param $socket
  * @param User
  * @param Room
  */
@@ -59,15 +61,13 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
   // Room options.
   $scope.roomOptions = {
     // Show or hide button Disconnect or Reconnect room.
-    connect: true,
-    buttons: false
+    connect: true
   };
 
   // Camera options.
   $scope.cameraOptions = {
     // Enable / Disable Camera.
-    enable    : true,
-    fullscreen: false
+    enable: true
   };
 
   // Get room by ID.
@@ -81,7 +81,15 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
         // Execute webrtc service.
         $roomRtc.initRoom(roomId, result.room.total, function (result) {
           if (result.type == 'success') {
-            $scope.roomOptions.buttons = true;
+
+            if (!$scope.cameraOptions.enable) {
+              $scope.enableCamera(false);
+            }
+
+            if (!$scope.roomOptions.connect) {
+              $scope.disconnectRoom(roomId);
+            }
+
             $socket.emit('new user room', {
               room_id: $scope.room._id,
               user   : {
@@ -90,14 +98,13 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
               }
             });
           }
-          else {
-            $scope.roomOptions.buttons = false;
-          }
 
           if (!$scope.$$phase) {
             $scope.$apply();
           }
         });
+
+        scrollChatBox();
       }, 100);
     }
     else {
@@ -168,33 +175,50 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
    * Set fullscreen video tag of some client.
    *
    * @param videoId
-   * @param fullscreen
    */
-  $scope.fullscreen = function (videoId, fullscreen) {
-    if (videoId) {
-      var $caller = $('#client-' + videoId);
-      var $buttonFull = $caller.siblings().eq(0);
-      var $buttonNotFull = $caller.siblings().eq(1);
+  $scope.setFullscreen = function (videoId) {
+    var $clientBlock = $('#client-' + videoId)
+    var $fullscreenButton = $clientBlock.find('.cf-client-button-fullscreen');
+    var state = $fullscreenButton.attr('data-cf-fullscreen-state');
 
-      if (fullscreen) {
-        $caller.css({
-          'height': '100%',
-          'width' : '100%'
-        });
-        $buttonFull.hide();
-        $buttonNotFull.show();
-      }
-      else {
-        $caller.css({
-          'height': '',
-          'width' : ''
-        });
-        $buttonFull.show();
-        $buttonNotFull.hide();
-      }
+    var $selfFullscreen = $('#cf-self-fullscreen');
+    var $clientFullscreen = $('#cf-client-fullscreen');
+
+    var $streamBlockSelf = $('#cf-self-stream-block');
+    var $self = $streamBlockSelf.find('#self');
+
+    var $client = $clientBlock.find('video');
+
+    $fullscreenButton.removeClass('cf-text-muted text-danger');
+    if (state == 'false') {
+      $fullscreenButton.attr('data-cf-fullscreen-state', true).addClass('text-danger');
+      $scope.fullscreen = true;
+
+      var selfSrcStream = $self.attr('src');
+      $selfFullscreen.attr('src', selfSrcStream);
+      $streamBlockSelf.hide();
+
+      var clientSrcStream = $client.attr('src');
+      $clientFullscreen.attr('src', clientSrcStream);
+    }
+    else {
+      $fullscreenButton.attr('data-cf-fullscreen-state', false).addClass('cf-text-muted');
+      $scope.fullscreen = false;
+
+      $selfFullscreen.attr('src', '');
+      $clientFullscreen.attr('src', '');
+
+      $streamBlockSelf.show();
     }
   };
 
+  /**
+   * Sockets.
+   */
+
+  /**
+   * Socket update chat messages by room ID.
+   */
   $socket.on('update chat messages ' + roomId, function (result) {
     result.json_msg.created = Date.now();
     $scope.room.chats.push(result.json_msg);
@@ -202,6 +226,8 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
     $scope.chat = {
       message: ''
     }
+
+    scrollChatBox();
 
     if (!$scope.$$phase) {
       $scope.$apply();
@@ -211,7 +237,8 @@ var roomCtrl = function ($scope, $rootScope, $routeParams, $location, $http, $ro
   /**
    * Notification when other users connect to this room.
    */
-  $socket.on('notification new user room ' + roomId, function (result) {});
+  $socket.on('notification new user room ' + roomId, function (result) {
+  });
 };
 
 /**

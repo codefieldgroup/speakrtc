@@ -13,6 +13,12 @@ footer {
 	padding : 30px 0;
 }
 
+@media (min-width : 1200px) {
+	.container {
+		width : 1353px;
+	}
+}
+
 /*=Header Page.
  -------------------------------------------------------------- */
 .cf-navbar {
@@ -28,6 +34,10 @@ footer {
 .cf-navbar-brand {
 	padding     : 5px 5px;
 	line-height : 3px;
+}
+
+.navbar > .container .cf-navbar-brand {
+	margin-left : 9px;
 }
 
 /* Phone */
@@ -46,11 +56,117 @@ footer {
 .cf-state-badge {
 	font-size     : inherit;
 	border-radius : 0px;
+	margin-left   : 3px;
 }
 
-video {
-	width  : inherit;
-	height : inherit;
+/*=Body Page.
+ -------------------------------------------------------------- */
+.cf-title {
+	border-bottom  : 1px solid #ddd;
+	margin-bottom  : 15px;
+	margin-top     : 6px;
+	padding-bottom : 6px;
+}
+
+.cf-text-muted {
+	color : #2e2e2e;
+}
+
+.cf-options {
+	border-radius : 0px;
+	position      : absolute;
+	margin        : 2px;
+	padding       : 3px 4px;
+}
+
+.cf-options span {
+	display       : block;
+	margin-top    : 3px;
+	margin-bottom : 6px;
+	line-height   : 1.2;
+	font-size     : 14px;
+	cursor        : pointer;
+}
+
+.cf-options span:active,
+.cf-options span:hover {
+	color : #a94442;
+}
+
+.cf-video .img-thumbnail {
+	border-radius : 0px;
+	padding       : 1px;
+}
+
+.cf-btn-success {
+	background-color : rgb(68, 122, 68);
+	border-color     : rgb(68, 122, 68);
+}
+
+.cf-btn-success.disabled,
+.cf-btn-success[disabled] {
+	background-color : #6d966d;
+	border-color     : #6d966d;
+}
+
+.cf-chats ul {
+	padding  : 0px;
+	height   : 395px;
+	overflow : auto;
+}
+
+.cf-chats ul li {
+	list-style    : none outside none;
+	border-bottom : 1px solid #cfcfcf;
+	padding       : 2px 0px 5px;
+}
+
+.cf-chats .cf-name {
+	color           : rgb(68, 122, 68);
+	text-decoration : inherit;
+	font-size       : 10px;
+}
+
+.cf-chats .cf-name:hover,
+.cf-chats .cf-name:focus {
+	color           : #3d6d43;
+	text-decoration : inherit;
+}
+
+.cf-chats .cf-datetime {
+	color         : #adadad;
+	font-size     : 9px !important;
+	font-weight   : 400;
+	display       : block;
+	margin-bottom : -19px;
+}
+
+.cf-chats .cf-message {
+	display    : block;
+	text-align : left;
+	font-size  : 11px;
+	color      : #353535;
+}
+
+.cf-chat-form {
+	padding          : 8px;
+	background-color : #e0e0e0;
+	clear            : both;
+}
+
+/*=Display Fullscreen.
+ -------------------------------------------------------------- */
+.cf-display-fullscreen {
+	position : absolute;
+	top      : 12px;
+}
+
+.cf-display-fullscreen video {
+	padding : 0px;
+}
+
+#cf-client-fullscreen {
+	width : 100%;
 }
 
 /*=Admin Flash Messages.
@@ -65,7 +181,7 @@ video {
 }
 
 #socket-admin-notifications small {
-	margin-left : -11px;
+	margin-left : 16px;
 }
 
 #socket-admin-notifications .label {
