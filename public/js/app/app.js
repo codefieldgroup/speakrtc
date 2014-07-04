@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services.
-var app = angular.module('speakrtc', ['ngResource']);
+var app = angular.module('speakrtc', ['ngResource', 'localytics.directives']);
 
 // Routes of APP.
 app.config(['$routeProvider', function ($routeProvider) {
@@ -15,13 +15,13 @@ app.config(['$routeProvider', function ($routeProvider) {
     // Show all rooms.
     .when('/rooms', {
       templateUrl: '_rooms',
-      controller : roomsCtrl
+      controller : roomCtrl.rooms
     })
 
     // Show room by ID.
     .when('/rooms/:id/:name', {
       templateUrl: '_room',
-      controller : roomCtrl
+      controller : roomCtrl.room
     })
 
   /**
@@ -31,7 +31,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     // Show all users.
     .when('/users', {
       templateUrl: '_users',
-      controller : usersCtrl
+      controller : userCtrl.users
     })
 
     .otherwise({

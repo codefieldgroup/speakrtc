@@ -1,10 +1,5 @@
 /*=General HTML.
  -------------------------------------------------------------- */
-html,
-body {
-	overflow-x : hidden; /* Prevent scroll on narrow devices */
-}
-
 body {
 	padding-top : 70px;
 }
@@ -215,4 +210,18 @@ footer {
 
 .cf-speakrtc .gritter-title .label-danger {
 	background-color : #be3935;
+}
+
+/*=Chosen Angularjs Plugin. Modifications.
+ -------------------------------------------------------------- */
+.cf-speakrtc .chosen-choices {
+	min-height    : 30px;
+	padding       : 2px 5px;
+	font-size     : 12px;
+	line-height   : 1.5;
+	border-radius : 3px;
+}
+
+.cf-speakrtc .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+	margin : 5px 0;
 }
