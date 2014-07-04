@@ -31,12 +31,67 @@ var roomCtrl = {
     // Get all rooms.
     Room.query(function (result) {
       if (result.type == 'success') {
-        $scope.rooms = result.rooms;
+        $rootScope.rooms = result.rooms;
       }
       else {
         flashMessageLaunch(result.msg);
       }
     });
+  },
+
+  /**
+   * Controller Room Model: Show all rooms.
+   * Router:
+   * .when('/rooms/:id', {
+   *  templateUrl: '_roomEdit',
+   *   controller : roomCtrl.edit
+   * })
+   *
+   * @param $scope
+   * @param $rootScope
+   * @param $routeParams
+   * @param Room
+   * @param User
+   */
+  edit: function ($scope, $rootScope, $routeParams, Room, User) {
+    var roomId = $routeParams.id;
+    $rootScope.title = 'SpeakRTC: Edit Room';
+
+    $scope.room = {};
+
+    // Get room by ID.
+    Room.get({id: roomId}, function (result) {
+      if (result.type == 'success') {
+        $scope.room = result.room;
+        $rootScope.room = result.room;
+
+        // Get all users.
+        User.query(function (result) {
+          if (result.type == 'success') {
+            $scope.users = result.users;
+          }
+        });
+      }
+      else {
+        flashMessageLaunch(result.msg);
+      }
+    });
+
+    /**
+     * Edit room.
+     *
+     * @param room
+     */
+    $scope.edit = function (room) {
+      Room.update({id: room._id}, room, function (result) {
+        if (result.type == 'success') {
+          flashMessageLaunch(result.msg);
+        }
+        else {
+          flashMessageLaunch(result.msg);
+        }
+      });
+    }
   },
 
   /**
@@ -258,10 +313,11 @@ var roomCtrl = {
    * div(ng-include src=" '_add_room' ")
    *
    * @param $scope
+   * @param $rootScope
    * @param User
    * @param Room
    */
-  add: function ($scope, User, Room) {
+  add: function ($scope, $rootScope, User, Room) {
     $scope.users = [];
 
     // Get all users.
@@ -285,7 +341,7 @@ var roomCtrl = {
     $scope.add = function (room) {
       Room.create({}, room, function (result) {
         if (result.type == 'success') {
-          $scope.rooms.push(result.room);
+          $rootScope.rooms.push(result.room);
           flashMessageLaunch(result.msg);
 
           $scope.room = {
@@ -305,5 +361,45 @@ var roomCtrl = {
         }
       });
     }
+  },
+
+  /**
+   * Controller Room Model: Delete room by ID.
+   * Template:
+   * span.badge
+   *    span.glyphicon.glyphicon-remove-circle.text-danger(ng-controller="roomCtrl.delete",ng-click="delete(room)")
+   *
+   * @param $scope
+   * @param $rootScope
+   * @param Room
+   */
+  delete: function ($scope, $rootScope, Room) {
+
+    /**
+     * Delete room button.
+     *
+     * @param room
+     */
+    $scope.delete = function (room) {
+      Room.destroy({id: room._id}, function (result) {
+        if (result.type == 'success') {
+          flashMessageLaunch(result.msg);
+
+          var old_rooms = $rootScope.rooms;
+          var new_rooms = [];
+
+          angular.forEach(old_rooms, function (room_check) {
+            if (room_check._id !== room._id) {
+              new_rooms.push(room_check);
+            }
+          });
+
+          $rootScope.rooms = new_rooms;
+        }
+        else {
+          flashMessageLaunch(result.msg);
+        }
+      });
+    };
   }
 };

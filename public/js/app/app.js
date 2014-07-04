@@ -24,6 +24,12 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller : roomCtrl.room
     })
 
+    // Edit user.
+    .when('/rooms/:id', {
+      templateUrl: '_roomEdit',
+      controller : roomCtrl.edit
+    })
+
   /**
    * User Routes.
    */

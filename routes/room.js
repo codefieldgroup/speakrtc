@@ -38,6 +38,6 @@ module.exports = function (app) {
   // API /api/rooms/:room_id
   api_room_route.route('/:room_id')
     .get(user.ensure_authenticated, room.get_api_room)
-    .put(/*TODO: Victor: Implemented this method request to update room by id*/)
-    .delete(/*TODO: Victor: Implemented this method request to delete one room by id*/);
+    .put(user.ensure_authenticated, room.put_api_edit)
+    .delete(user.ensure_authenticated, room.delete_api_del);
 };

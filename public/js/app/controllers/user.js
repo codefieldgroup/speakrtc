@@ -95,9 +95,10 @@ var userCtrl = {
    * div(ng-include src=" '_add_user' ")
    *
    * @param $scope
+   * @param $rootScope
    * @param User
    */
-  add: function ($scope, User) {
+  add: function ($scope, $rootScope, User) {
     $scope.user = {
       is_admin: false,
       active  : true
@@ -111,7 +112,7 @@ var userCtrl = {
     $scope.add = function (user) {
       User.create({}, user, function (result) {
         if (result.type == 'success') {
-          $scope.users.push(result.user);
+          $rootScope.users.push(result.user);
           flashMessageLaunch(result.msg);
 
           $scope.user = {
@@ -135,7 +136,10 @@ var userCtrl = {
   },
 
   /**
-   * Delete user by ID.
+   * Controller User Model: Delete user by ID.
+   * Template:
+   * span.badge
+   *    span.glyphicon.glyphicon-remove-circle.text-danger(ng-controller="userCtrl.delete",ng-click="delete(user)")
    *
    * @param $scope
    * @param User
@@ -167,6 +171,6 @@ var userCtrl = {
           flashMessageLaunch(result.msg);
         }
       });
-    }
+    };
   }
 };

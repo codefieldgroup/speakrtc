@@ -205,6 +205,12 @@ module.exports = {
     res.json({ msg: 'This operation is not implemented.', type: 'alert' });
   },
 
+  /**
+   * Put edit user by ID.
+   *
+   * @param req
+   * @param res
+   */
   put_api_edit: function (req, res) {
     var object_user = req.user;
 

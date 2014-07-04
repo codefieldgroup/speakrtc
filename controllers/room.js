@@ -89,6 +89,43 @@ module.exports = {
   },
 
   /**
+   * API PUT.
+   */
+
+  /**
+   * Put edit room by ID.
+   *
+   * @param req
+   * @param res
+   */
+  put_api_edit: function (req, res) {
+    var object_user = req.user;
+
+    var json_return = {};
+    Room.edit(object_user, req.body, function (error, result) {
+      if (!error) {
+        json_return = {
+          type: 'success',
+          msg : result
+        }
+
+        // Log.
+        log.save('success', req.ip, req.method, 'The room is edited: "' + req.body.name + '" - ' + req.body._id + '.', object_user);
+      }
+      else {
+        json_return = {
+          type: 'error',
+          msg : error
+        }
+
+        // Log.
+        log.save('error', req.ip, req.method, 'While edit room with ID ' + req.params.room_id + ' , this user does not have permission to access this option.', object_user);
+      }
+      res.json(json_return);
+    });
+  },
+
+  /**
    * API POST.
    */
 
@@ -166,6 +203,43 @@ module.exports = {
         log.save('error', req.ip, req.method, 'While added message chat to room ' + req.body.room_name + ' , this room not added.', object_user);
         res.json(json_return);
       }
+    });
+  },
+
+  /**
+   * API DELETE.
+   */
+
+  /**
+   * Delete room by ID.
+   *
+   * @param req
+   * @param res
+   */
+  delete_api_del: function (req, res) {
+    var object_user = req.user;
+
+    var json_return = {};
+    Room.delete(object_user, req.params.room_id, function (error, result) {
+      if (!error) {
+        json_return = {
+          type: 'success',
+          msg : result
+        }
+
+        // Log.
+        log.save('success', req.ip, req.method, 'The room is deleted: "' + result.room.name + '" - ' + req.params.room_id + '.', object_user);
+      }
+      else {
+        json_return = {
+          type: 'error',
+          msg : error
+        }
+
+        // Log.
+        log.save('error', req.ip, req.method, 'While delete room with ID ' + req.params.room_id + ' , this user does not have permission to access this option.', object_user);
+      }
+      res.json(json_return);
     });
   },
 

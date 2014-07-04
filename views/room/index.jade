@@ -17,11 +17,57 @@ script(id="_rooms",type="text/ng-template")
 					h3.panel-title
 						span.glyphicon.glyphicon-facetime-video
 						a(ng-href="#/rooms/{{ room._id }}/{{ room.name }}")   {{ room.name }}
-						small.text-muted(style="float: right;")  {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}
+
+						.cf-options-header-panel(ng-show="user.is_admin")
+							span.badge
+								a(href="#/rooms/{{ room._id }}",title="Edit Room")
+									span.glyphicon.glyphicon-edit.cf-text-muted
+							span.badge
+								span.glyphicon.glyphicon-remove-circle.text-danger(ng-controller="roomCtrl.delete",ng-click="delete(room)")
+
 				.panel-body
+					small.text-muted(style="float: right;")  {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}
 					div(ng-switch,on="room.is_blocked")
 						div(ng-switch-when="true",style="color:#a94442;") restricted
 						div(ng-switch-when="false",style="color:rgb(68, 122, 68);") open
+
+	//- Include template to add room, Controller: roomCtrl.add.
+	.col-lg-4.col-md-4.col-sm-4.col-xs-12(ng-include src=" '_add_room' ")
+
+//- Edit Room.
+script(id="_roomEdit",type="text/ng-template")
+	//- Block Edit Room.
+	.col-lg-8.col-md-8.col-sm-8.col-xs-12
+		.col-lg-12
+			h5.cf-title
+				strong Edit Room - {{ room.name }}
+
+		.col-lg-12
+			form(role="form",name="form_edit_room",ng-controller="roomCtrl.edit")
+				.form-group
+					label Name*
+					input.form-control.input-sm(type="text",ng-model="room.name",required)
+
+				.form-group
+					label Total of users can connecting*
+					input.form-control.input-sm(type="number",ng-model="room.total",required)
+
+				.checkbox
+					label
+						input(type="checkbox",ng-model="room.is_blocked")
+						| Blocked?
+
+				.checkbox
+					label
+						input(type="checkbox",ng-model="room.is_show")
+						| Show?
+
+				.form-group
+					label Allow users*
+					select.form-control(chosen,multiple,ng-options="user._id as user.username for user in users",ng-model="room.users",data-placeholder="Pick users")
+
+				.form-group
+					button.btn.btn-default(type="submit",ng-click="edit(room)",ng-disabled="!form_edit_room.$valid") Edit Room
 
 	//- Include template to add room, Controller: roomCtrl.add.
 	.col-lg-4.col-md-4.col-sm-4.col-xs-12(ng-include src=" '_add_room' ")

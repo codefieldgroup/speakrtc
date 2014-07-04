@@ -250,4 +250,84 @@ Room.statics.add_message = function (auth_user, data, callback) {
   }
 };
 
+/**
+ * Edit room by ID.
+ *
+ * @param auth_user
+ * @param room_edit
+ * @param callback
+ * @returns {*|type[]|Deferred|findOne|Query|findOne}
+ */
+Room.statics.edit = function (auth_user, room_edit, callback) {
+  var this_model = this;
+
+  if (auth_user.is_admin) {
+    return this_model.findOne({
+      _id: room_edit._id
+    }, function (error, doc) {
+      if (!error) {
+        if (doc) {
+          doc.name = room_edit.name;
+          doc.total = room_edit.total;
+          doc.is_blocked = room_edit.is_blocked;
+          doc.is_show = room_edit.is_show;
+          doc.users = room_edit.users;
+
+          doc.save();
+          callback(null, {msg: 'The room is edited.', type: 'success'});
+        }
+        else {
+          callback({ msg: 'The room not exist.', type: 'error' }, null);
+        }
+      }
+      else {
+        callback({ msg: error, type: 'error' }, null);
+      }
+    });
+  }
+  else {
+    callback({ msg: 'You do not have access to this page..', type: 'error' }, null);
+  }
+};
+
+/**
+ * Delete room by ID.
+ *
+ * @param auth_user
+ * @param room_id
+ * @param callback
+ * @returns {*|type[]|Deferred|findOne|Query|findOne}
+ */
+Room.statics.delete = function (auth_user, room_id, callback) {
+  var this_model = this;
+
+  if (auth_user.is_admin) {
+    return this_model.findOne({
+      _id: room_id
+    }, function (error, doc) {
+      if (!error) {
+        if (doc) {
+
+          this_model.remove({
+            _id: room_id
+          }, function (error) {
+            if (!error) {
+              callback(null, {msg: 'The room is deleted.', type: 'success', room: doc});
+            }
+            else {
+              callback({ msg: error, type: 'error' }, null);
+            }
+          });
+        }
+        else {
+          callback({ msg: 'The room not exist.', type: 'error' }, null);
+        }
+      }
+      else {
+        callback({ msg: error, type: 'error' }, null);
+      }
+    });
+  }
+};
+
 module.exports = mongoose.model('Room', Room);
