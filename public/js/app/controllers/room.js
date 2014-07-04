@@ -60,7 +60,7 @@ var roomCtrl = {
   room: function ($scope, $rootScope, $routeParams, $location, $http, $roomRtc, $socket, User, Room) {
     var roomId = $routeParams.id;
     var roomName = $routeParams.name;
-    $rootScope.title = 'SpeakRTC: Rooms ' + roomName;
+    $rootScope.title = 'SpeakRTC: Room: ' + roomName;
 
     $scope.room = {};
 

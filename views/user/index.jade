@@ -17,11 +17,51 @@ script(id="_users",type="text/ng-template")
 					h3.panel-title
 						span.glyphicon.glyphicon-user
 						a(ng-href="#")   {{ iuser.username }} - {{ iuser.name }} {{ iuser.last_name }}
-						small.text-muted(style="float: right;")  {{ iuser.created | date:'MM/dd/yyyy h:mm:ssa' }}
+
+						.cf-options-header-panel(ng-show="user.is_admin")
+							span.badge
+								a(href="#/users/{{ iuser._id }}",title="Edit User")
+									span.glyphicon.glyphicon-edit.cf-text-muted
+							span.badge
+								span.glyphicon.glyphicon-remove-circle.text-danger(ng-controller="userCtrl.delete",ng-click="delete(iuser)")
+
 				.panel-body
+					small.text-muted  {{ iuser.created | date:'MM/dd/yyyy h:mm:ssa' }}
 					div(ng-switch,on="iuser.active")
 						div(ng-switch-when="true") Active
 						div(ng-switch-when="false") Not active
+
+	//- Include template to add user, Controller: userCtrl.add.
+	.col-lg-4.col-md-4.col-sm-4.col-xs-12(ng-include src=" '_add_user' ")
+
+//- List all users.
+script(id="_user",type="text/ng-template")
+	//- Block Edit User.
+	.col-lg-8.col-md-8.col-sm-8.col-xs-12
+		.col-lg-12
+			h5.cf-title
+				strong Edit User - {{ user.username }}
+		.col-lg-12
+			form(role="form",name="form_edit_user")
+				.form-group
+					label Email*
+					input.form-control.input-sm(type="email",ng-model="user.email",required)
+				.form-group
+					label Name*
+					input.form-control.input-sm(type="text",ng-model="user.name",required)
+				.form-group
+					label Last Name*
+					input.form-control.input-sm(type="text",ng-model="user.last_name",required)
+				.checkbox
+					label
+						input(type="checkbox",ng-model="user.is_admin")
+						| Is Admin?
+				.checkbox
+					label
+						input(type="checkbox",ng-model="user.active")
+						| Active?
+				.form-group
+					button.btn.btn-default(type="submit",ng-click="edit(user)",ng-disabled="!form_edit_user.$valid") Edit User
 
 	//- Include template to add user, Controller: userCtrl.add.
 	.col-lg-4.col-md-4.col-sm-4.col-xs-12(ng-include src=" '_add_user' ")

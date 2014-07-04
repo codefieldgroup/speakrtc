@@ -34,6 +34,12 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller : userCtrl.users
     })
 
+    // Edit user.
+    .when('/users/:id', {
+      templateUrl: '_user',
+      controller : userCtrl.user
+    })
+
     .otherwise({
       redirectTo: '/'
     });

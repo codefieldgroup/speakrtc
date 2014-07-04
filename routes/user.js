@@ -56,16 +56,16 @@ module.exports = function (app) {
 
   // API /api/users
   api_user_route.route('/')
-    .get(/*TODO: Victor: user.ensure_authenticated,*/ user.get_api_users)
+    .get(user.ensure_authenticated, user.get_api_users)
     .put(user.put_api_user_all)
-    .post(/*TODO: Victor: user.ensure_authenticated,*/ user.post_api_user_add)
+    .post(user.ensure_authenticated, user.post_api_user_add)
     .delete(/*TODO: Victor: Implemented this method request to delete all users*/);
 
   // API /api/users/:user_id
   api_user_route.route('/:user_id')
-    .get(/*TODO: Victor: Implemented this method request to get user by id*/)
-    .put(/*TODO: Victor: Implemented this method request to update user by id*/)
-    .delete(/*TODO: Victor: Implemented this method request to delete one user by id*/);
+    .get(user.ensure_authenticated, user.get_api_user)
+    .put(user.ensure_authenticated, user.put_api_edit)
+    .delete(user.ensure_authenticated, user.delete_api_del);
 
   /**
    * API SOCKETS.

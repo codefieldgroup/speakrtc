@@ -104,6 +104,18 @@ footer {
 	border-color     : #6d966d;
 }
 
+.cf-options-header-panel {
+	float : right;
+}
+
+.cf-options-header-panel span.badge {
+	border-radius : 0px;
+	margin-left   : 3px;
+	cursor        : pointer;
+}
+
+/*=Chat.
+ -------------------------------------------------------------- */
 .cf-chats ul {
 	padding  : 0px;
 	height   : 395px;
