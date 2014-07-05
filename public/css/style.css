@@ -114,6 +114,34 @@ footer {
 	cursor        : pointer;
 }
 
+/*=Modal.
+ -------------------------------------------------------------- */
+.cf-modal {
+
+}
+
+.cf-modal .modal-header {
+	background-color : #a94442;
+	color            : #fff;
+}
+
+.cf-modal .modal-header .close {
+	opacity : 1;
+	color   : #fff;
+}
+
+.cf-modal .modal-footer {
+	padding    : 8px 14px 8px;
+	margin-top : 0px;
+	border-top : 0px solid #e5e5e5;
+	text-align : left;
+}
+
+.cf-modal .modal-footer .btn-danger {
+	background-color : #a94442;
+	border-color     : #a94442;
+}
+
 /*=Chat.
  -------------------------------------------------------------- */
 .cf-chats ul {

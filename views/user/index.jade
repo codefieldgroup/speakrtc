@@ -23,13 +23,23 @@ script(id="_users",type="text/ng-template")
 								a(href="#/users/{{ iuser._id }}",title="Edit User")
 									span.glyphicon.glyphicon-edit.cf-text-muted
 							span.badge
-								span.glyphicon.glyphicon-remove-circle.text-danger(ng-controller="userCtrl.delete",ng-click="delete(iuser)")
+								span.glyphicon.glyphicon-remove-circle.text-danger(data-toggle="modal",data-target="#modal-user-{{ iuser._id }}")
 
 				.panel-body
 					small.text-muted(style="float: right;")  {{ iuser.created | date:'MM/dd/yyyy h:mm:ssa' }}
 					div(ng-switch,on="iuser.active")
 						div(ng-switch-when="true") Active
 						div(ng-switch-when="false") Not active
+
+					.cf-modal.modal(id="modal-user-{{ iuser._id }}",tabindex="-1",role="dialog",aria-labelledby="modal-user-{{ iuser._id }}Label",aria-hidden="true")
+						.modal-dialog
+							.modal-content
+								.modal-header
+									button.close(type="button",data-dismiss="modal",aria-hidden="true") &times;
+									h4.modal-title Delete User: {{ iuser.username }}
+								.modal-footer
+									button.btn.btn-danger.btn-sm(type="button",data-dismiss="modal",ng-controller="userCtrl.delete",ng-click="delete(iuser)") Ok
+									button.btn.btn-default.btn-sm(type="button",data-dismiss="modal") Close
 
 	//- Include template to add user, Controller: userCtrl.add.
 	.col-lg-4.col-md-4.col-sm-4.col-xs-12(ng-include src=" '_add_user' ")
