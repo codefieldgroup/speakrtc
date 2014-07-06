@@ -78,7 +78,7 @@ var roomCtrl = {
     });
 
     /**
-     * Edit room.
+     * Action Edit room.
      *
      * @param room
      */
@@ -176,7 +176,7 @@ var roomCtrl = {
     });
 
     /**
-     * Hangup (disconnect) Room.
+     * Action Hangup (disconnect) Room.
      *
      * @param roomId
      */
@@ -186,7 +186,7 @@ var roomCtrl = {
     };
 
     /**
-     * Reconnect Room.
+     * Action Reconnect Room.
      *
      * @param roomId
      */
@@ -203,7 +203,7 @@ var roomCtrl = {
     };
 
     /**
-     * Enable/Disable Camera.
+     * Action Enable/Disable Camera.
      *
      * @param enable
      */
@@ -213,7 +213,7 @@ var roomCtrl = {
     };
 
     /**
-     * Add message chat function.
+     * Action Add message chat function.
      *
      * @param room
      */
@@ -233,7 +233,7 @@ var roomCtrl = {
     };
 
     /**
-     * Set fullscreen video tag of some client.
+     * Action Set fullscreen video tag of some client.
      *
      * @param videoId
      */
@@ -334,7 +334,7 @@ var roomCtrl = {
     };
 
     /**
-     * Add room function.
+     * Action Add room function.
      *
      * @param room
      */
@@ -376,7 +376,7 @@ var roomCtrl = {
   delete: function ($scope, $rootScope, Room) {
 
     /**
-     * Delete room button.
+     * Action Delete room button.
      *
      * @param room
      */

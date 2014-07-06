@@ -68,7 +68,7 @@ var userCtrl = {
     });
 
     /**
-     * Edit user.
+     * Action Edit user.
      *
      * @param user
      */
@@ -105,7 +105,7 @@ var userCtrl = {
     };
 
     /**
-     * Add user function.
+     * Action Add user function.
      *
      * @param user
      */
@@ -147,7 +147,7 @@ var userCtrl = {
   delete: function ($scope, $rootScope, User) {
 
     /**
-     * Delete user button.
+     * Action Delete user button.
      *
      * @param user
      */

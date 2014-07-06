@@ -19,11 +19,11 @@ script(id="_users",type="text/ng-template")
 						a(ng-href="#")   {{ iuser.username }} - {{ iuser.name }} {{ iuser.last_name }}
 
 						.cf-options-header-panel(ng-show="user.is_admin")
-							span.badge
-								a(href="#/users/{{ iuser._id }}",title="Edit User")
+							a(href="#/users/{{ iuser._id }}",title="Edit User")
+								span.badge
 									span.glyphicon.glyphicon-edit.cf-text-muted
-							span.badge
-								span.glyphicon.glyphicon-remove-circle.text-danger(data-toggle="modal",data-target="#modal-user-{{ iuser._id }}")
+							span.badge(data-toggle="modal",data-target="#modal-user-{{ iuser._id }}")
+								span.glyphicon.glyphicon-remove-circle.text-danger
 
 				.panel-body
 					small.text-muted(style="float: right;")  {{ iuser.created | date:'MM/dd/yyyy h:mm:ssa' }}

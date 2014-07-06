@@ -19,11 +19,11 @@ script(id="_rooms",type="text/ng-template")
 						a(ng-href="#/rooms/{{ room._id }}/{{ room.name }}")   {{ room.name }}
 
 						.cf-options-header-panel(ng-show="user.is_admin")
-							span.badge
-								a(href="#/rooms/{{ room._id }}",title="Edit Room")
+							a(href="#/rooms/{{ room._id }}",title="Edit Room")
+								span.badge
 									span.glyphicon.glyphicon-edit.cf-text-muted
-							span.badge
-								span.glyphicon.glyphicon-remove-circle.text-danger(data-toggle="modal",data-target="#modal-room-{{ room._id }}")
+							span.badge(data-toggle="modal",data-target="#modal-room-{{ room._id }}")
+								span.glyphicon.glyphicon-remove-circle.text-danger
 
 				.panel-body
 					small.text-muted(style="float: right;")  {{ room.created | date:'MM/dd/yyyy h:mm:ssa' }}

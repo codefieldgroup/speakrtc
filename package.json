@@ -1,7 +1,7 @@
 {
-  "name"       : "Speak_RTC",
+  "name"       : "SpeakRTC",
   "version"    : "0.0.1",
-  "author"     : "Victor Cruz Alonso <victorcruzalonso@gmail.com>",
+  "author"     : "Victor Cruz <victorcruzalonso@gmail.com>",
   "description": "",
   "private"    : true,
 

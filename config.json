@@ -2,8 +2,8 @@
   "database": {
     "host": "192.168.150.220",
     "name": "speakrtc",
-    "user": "admin",
-    "pass": "admin",
+    "user": "",
+    "pass": "",
     "port": ""
   },
 
@@ -13,7 +13,7 @@
       "name"    : "admin@root",
       "password": "admin505"
     },
-    "name"      : "Speak RTC"
+    "name"      : "Speak"
   },
 
   "mailer"  : {
