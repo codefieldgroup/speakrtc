@@ -12,7 +12,7 @@ script(id="_users",type="text/ng-template")
 				strong Users.
 
 		.col-lg-12.cf-client(ng-repeat="iuser in users")
-			.panel.panel-default
+			.panel.panel-default(ng-show="iuser.username != 'admin@root'")
 				.panel-heading
 					h3.panel-title
 						span.glyphicon.glyphicon-user

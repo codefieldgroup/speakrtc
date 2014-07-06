@@ -1,6 +1,10 @@
 /*=General HTML.
  -------------------------------------------------------------- */
 body {
+	padding-top : 48px;
+}
+
+.cf-body-admin {
 	padding-top : 70px;
 }
 
@@ -16,10 +20,17 @@ footer {
 
 /*=Header Page.
  -------------------------------------------------------------- */
+.cf-navbar-admin {
+	margin-top : 20px;
+}
+
 .cf-navbar {
 	min-height    : 30px;
 	margin-bottom : 0px;
-	margin-top    : 20px;
+}
+
+.cf-navbar-nav {
+	margin-right : 0px !important;
 }
 
 .cf-navbar-nav > li > a {

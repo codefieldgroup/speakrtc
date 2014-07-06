@@ -24,7 +24,7 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 			script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
 			<![endif]
 
-	body.cf-speakrtc
+	body.cf-speakrtc(ng-class="{'cf-body-admin': user.is_admin}")
 		if(user)
 			//- Block to show messages socket only for admins.
 			if(user.is_admin)
@@ -32,7 +32,7 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 					.container
 						small(style="display:none;")
 
-			.cf-navbar.navbar.navbar-fixed-top.navbar-default(role="navigation")
+			.cf-navbar.navbar.navbar-fixed-top.navbar-default(role="navigation",ng-class="{'cf-navbar-admin': user.is_admin}")
 				.container.cf-container
 					.navbar-header
 						button.cf-navbar-toggle.navbar-toggle(type="button",data-toggle="collapse",data-target=".navbar-collapse")
@@ -56,7 +56,7 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 						ul.nav.cf-navbar-nav.navbar-nav.navbar-right
 							li.dropdown
 								a.dropdown-toggle(href="#",data-toggle="dropdown")
-									strong #{ user.username }
+									strong #{ user.name }
 									if(user.is_admin)
 										small  - ADMIN
 									b.caret
