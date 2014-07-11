@@ -83,6 +83,10 @@ var roomCtrl = {
      * @param room
      */
     $scope.edit = function (room) {
+      if (typeof room.users[0] == 'object') {
+        room.users = [];
+      }
+
       Room.update({id: room._id}, room, function (result) {
         if (result.type == 'success') {
           flashMessageLaunch(result.msg);
