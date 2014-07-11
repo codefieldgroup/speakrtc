@@ -53,7 +53,7 @@ var Room = new Schema({
  * @param callback
  * @returns {Promise}
  */
-Room.statics.list_all = function (auth_user, callback) {
+Room.statics.all = function (auth_user, callback) {
   var this_model = this;
 
   // Rules Filter.

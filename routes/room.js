@@ -30,14 +30,14 @@ module.exports = function (app) {
 
   // API /api/rooms
   api_room_route.route('/')
-    .get(/*TODO: Victor: user.ensure_authenticated*/ room.get_api_rooms)
+    .get(/*TODO: Victor: user.ensure_authenticated*/ room.get_api_all)
     /*TODO: Victor: .put(room.put_api_room_all)*/
-    .post(/*TODO: Victor: user.ensure_authenticated,*/ room.post_api_room_add)
+    .post(/*TODO: Victor: user.ensure_authenticated,*/ room.post_api_add)
     .delete(/*TODO: Victor: Implemented this method request to delete all rooms*/);
 
   // API /api/rooms/:room_id
   api_room_route.route('/:room_id')
-    .get(user.ensure_authenticated, room.get_api_room)
+    .get(user.ensure_authenticated, room.get_api_one)
     .put(user.ensure_authenticated, room.put_api_edit)
     .delete(user.ensure_authenticated, room.delete_api_del);
 };

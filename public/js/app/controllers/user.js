@@ -21,7 +21,7 @@ var userCtrl = {
    * @param $location
    * @param User
    */
-  users: function ($scope, $rootScope, $location, User) {
+  all: function ($scope, $rootScope, $location, User) {
     $rootScope.title = 'SpeakRTC: Users';
 
     $rootScope.users = {};
@@ -51,7 +51,7 @@ var userCtrl = {
    * @param $routeParams
    * @param User
    */
-  user: function ($scope, $rootScope, $routeParams, User) {
+  one: function ($scope, $rootScope, $routeParams, User) {
     var userId = $routeParams.id;
     $rootScope.title = 'SpeakRTC: Edit User';
 

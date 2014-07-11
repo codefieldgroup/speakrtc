@@ -25,11 +25,11 @@ module.exports = {
    * @param req
    * @param res
    */
-  get_api_rooms: function (req, res) {
+  get_api_all: function (req, res) {
     var object_user = req.user;
 
     var json_return = {};
-    Room.list_all(object_user, function (error, rooms) {
+    Room.all(object_user, function (error, rooms) {
       if (!error) {
         json_return = {
           type : 'success',
@@ -60,7 +60,7 @@ module.exports = {
    * @param req
    * @param res
    */
-  get_api_room: function (req, res) {
+  get_api_one: function (req, res) {
     var object_user = req.user;
 
     var json_return = {};
@@ -135,7 +135,7 @@ module.exports = {
    * @param req
    * @param res
    */
-  post_api_room_add: function (req, res) {
+  post_api_add: function (req, res) {
     var object_user = req.user;
     var new_room = req.body;
     new_room.auth_user = object_user;

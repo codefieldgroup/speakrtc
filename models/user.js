@@ -73,7 +73,7 @@ User.statics.add_super_admin = function (callback) {
  * @param callback
  * @returns {*|find|type[]|Deferred|find|find}
  */
-User.statics.list_all = function (auth_user, callback) {
+User.statics.all = function (auth_user, callback) {
   var this_model = this;
 
   if (auth_user.is_admin) {

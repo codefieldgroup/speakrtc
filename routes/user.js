@@ -52,18 +52,18 @@ module.exports = function (app) {
   // Invoked for any requests passed to this router.
   app.use('/api/users', api_user_route);
 
-  api_user_route.get('/auth', user.ensure_authenticated, user.get_api_user_auth);
+  api_user_route.get('/auth', user.ensure_authenticated, user.get_api_auth);
 
   // API /api/users
   api_user_route.route('/')
-    .get(user.ensure_authenticated, user.get_api_users)
-    .put(user.put_api_user_all)
-    .post(user.ensure_authenticated, user.post_api_user_add)
+    .get(user.ensure_authenticated, user.get_api_all)
+    .put(user.put_api_all)
+    .post(user.ensure_authenticated, user.post_api_add)
     .delete(/*TODO: Victor: Implemented this method request to delete all users*/);
 
   // API /api/users/:user_id
   api_user_route.route('/:user_id')
-    .get(user.ensure_authenticated, user.get_api_user)
+    .get(user.ensure_authenticated, user.get_api_one)
     .put(user.ensure_authenticated, user.put_api_edit)
     .delete(user.ensure_authenticated, user.delete_api_del);
 

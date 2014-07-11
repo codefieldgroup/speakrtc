@@ -104,7 +104,7 @@ module.exports = {
    * @param req
    * @param res
    */
-  get_api_user_auth: function (req, res) {
+  get_api_auth: function (req, res) {
     var object_user = req.user;
 
     if (object_user) {
@@ -121,11 +121,11 @@ module.exports = {
    * @param req
    * @param res
    */
-  get_api_users: function (req, res) {
+  get_api_all: function (req, res) {
     var object_user = req.user;
 
     var json_return = {};
-    User.list_all(object_user, function (error, users) {
+    User.all(object_user, function (error, users) {
       if (!error) {
         json_return = {
           type : 'success',
@@ -155,7 +155,7 @@ module.exports = {
    * @param req
    * @param res
    */
-  get_api_user: function (req, res) {
+  get_api_one: function (req, res) {
     var object_user = req.user;
 
     var json_return = {};
@@ -193,7 +193,7 @@ module.exports = {
    * @param req
    * @param res
    */
-  put_api_user_all: function (req, res) {
+  put_api_all: function (req, res) {
     var object_user = req.user;
 
     // Log.
@@ -245,7 +245,7 @@ module.exports = {
    * @param req
    * @param res
    */
-  post_api_user_add: function (req, res) {
+  post_api_add: function (req, res) {
     var object_user = req.user;
 
     // To call to the model to add a new user.

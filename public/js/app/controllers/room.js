@@ -25,7 +25,7 @@ var roomCtrl = {
    * @param User
    * @param Room
    */
-  rooms: function ($scope, $rootScope, User, Room) {
+  all: function ($scope, $rootScope, User, Room) {
     $rootScope.title = 'SpeakRTC: Rooms';
 
     // Get all rooms.
@@ -112,7 +112,7 @@ var roomCtrl = {
    * @param User
    * @param Room
    */
-  room: function ($scope, $rootScope, $routeParams, $location, $http, $roomRtc, $socket, User, Room) {
+  one: function ($scope, $rootScope, $routeParams, $location, $http, $roomRtc, $socket, User, Room) {
     var roomId = $routeParams.id;
     var roomName = $routeParams.name;
     $rootScope.title = 'SpeakRTC: Room: ' + roomName;
