@@ -1,6 +1,7 @@
 /**
  * General functions.
  */
+var $body = jQuery('body');
 
 /**
  * Refresh and show connection state of socket.
@@ -129,6 +130,14 @@ setInterval(function () {
 
     $smallAdminMsg.html('<span class="label label-default">' + item.type + '</span> ' + item.msg)
       .slideUp(500).fadeIn(400).delay(3000).hide(500);
+
+    // Block show slide down logs when click in admin notifications bar.
+    var $totalList = jQuery('#quick-last-logs').find('.cf-total-list-logs small');
+    if ($totalList.children().length == 15) {
+      $totalList.children().eq(-1).remove();
+    }
+    var oldHtml = $totalList.html();
+    $totalList.html('<span><span class="label label-default">' + item.type + '</span> ' + item.msg + '<br></span>' + oldHtml);
   }
 
   // Show tags video when capture signal from others users.
@@ -140,3 +149,12 @@ setInterval(function () {
     (dataCaller != '') ? $this.show("slow") : $this.hide();
   });
 }, 4000);
+
+// Slide Down execute when click in admin notifications bar.
+$body
+  .on('click', '#socket-admin-notifications', function () {
+    $('#quick-last-logs').slideDown('slow');
+  })
+  .on('click', '#cf-btn-slide-down-close', function () {
+    $('#quick-last-logs').slideUp('slow');
+  });

@@ -28,9 +28,19 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 		if(user)
 			//- Block to show messages socket only for admins.
 			if(user.is_admin)
-				a#socket-admin-notifications.navbar-fixed-top(ng-href="#/logs")
+				a#socket-admin-notifications.navbar-fixed-top
 					.container
 						small(style="display:none;")
+
+				#quick-last-logs.cf-slide-down
+					.container.cf-container
+						.col-lg-5.cf-total-list-logs
+							small
+
+						.col-lg-7
+					.container
+						.col-lg-12
+							a#cf-btn-slide-down-close.btn.btn-xs.btn-block.cf-btn-close(role="button") Close
 
 			.cf-navbar.navbar.navbar-fixed-top.navbar-default(role="navigation",ng-class="{'cf-navbar-admin': user.is_admin}")
 				.container.cf-container

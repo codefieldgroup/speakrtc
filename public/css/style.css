@@ -208,6 +208,31 @@ footer {
 	clear            : both;
 }
 
+/*=Slider Down.
+ -------------------------------------------------------------- */
+.cf-slide-down {
+	display          : none;
+	width            : 100%;
+	background-color : black;
+	top              : 55px;
+	position         : fixed;
+	z-index          : 2000;
+	color            : rgb(150, 150, 150);
+}
+
+.cf-slide-down .cf-container {
+	height : 335px;
+}
+
+.cf-total-list-logs {
+	margin-top    : 7px;
+	margin-bottom : 7px;
+}
+
+.cf-btn-close {
+	margin-bottom : 2px;
+}
+
 /*=Display Fullscreen.
  -------------------------------------------------------------- */
 .cf-display-fullscreen {
