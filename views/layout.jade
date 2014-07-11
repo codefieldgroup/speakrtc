@@ -52,6 +52,9 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 								li(ng-class="{'/users':'active', false:''}[pathLocation]")
 									a(ng-href="#/users") Users
 
+								li(ng-class="{'/logs':'active', false:''}[pathLocation]")
+									a(ng-href="#/logs") Logs
+
 						//- Block to show user logged.
 						ul.nav.cf-navbar-nav.navbar-nav.navbar-right
 							li.dropdown
@@ -66,5 +69,7 @@ html(lang="en",ng-app="speakrtc",ng-cloak)
 										a(href="/auth/logout") Logout
 
 		block content
+
+		footer.cf-footer
 
 		include scripts

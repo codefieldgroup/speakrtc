@@ -36,9 +36,6 @@ module.exports = {
   get_dashboard: function (req, res) {
     var object_user = req.user;
 
-    // Log.
-    log.save('success', req.ip, req.method, 'Access to dashboard page.', object_user);
-
     res.render('user/dashboard', {
       user    : object_user,
       datetime: Date.now()

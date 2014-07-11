@@ -1,0 +1,79 @@
+//- Single Page of User Model.
+
+//-
+	Templates by Logs.
+
+//- List all logs.
+script(id="_logs",type="text/ng-template")
+	//- Block List Logs.
+	.col-lg-9.col-md-9.col-sm-9.col-xs-12
+		.col-lg-8.col-md-8.col-sm-8.col-xs-12
+			h5.cf-title
+				strong Logs.
+
+		.col-lg-4.col-md-4.col-sm-4.col-xs-12
+			.input-group.input-group-sm.pull-right
+				input.form-control.input-sm(type="text",ng-model="log",placeholder="Quick Search Logs ...")
+				span.input-group-addon
+					span.glyphicon.glyphicon-search
+
+		.col-lg-12
+			.table-responsive
+				table.table.table-hover.table-condensed
+					thead
+						tr
+							th #
+							th Added
+							th Type
+							th Method
+							th IP
+							th Log
+					tbody
+						tr(ng-repeat="log in logs | filter: log",ng-class="{'error':'danger', 'alert':'warning', false:''}[log.type]")
+							td {{ $index + 1 }}
+							td {{ log.datetime | date:'MM/dd/yyyy h:mm:ssa' }}
+							td {{ log.type }}
+							td {{ log.method }}
+							td {{ log.ip }}
+							td {{ log.msg }}
+
+		.col-lg-12(ng-show="show_more")
+			button.btn.btn-success.cf-btn-success.btn-xs.btn-block(type="submit",ng-click="more()") Show More
+
+	//- Block Advanced Search Logs.
+	.col-lg-3.col-md-3.col-sm-3.col-xs-12
+		.col-lg-12
+			h5.cf-title
+				strong Advanced Search.
+
+		.col-lg-12
+			form(role="form")
+				.form-group
+					label Type
+					select.form-control(ng-model="search.type")
+						option(value="") Select Type
+						option(value="success") SUCCESS
+						option(value="information") INFORMATION
+						option(value="error") ERROR
+						option(value="alert") ALERT
+
+				.form-group
+					label Method
+					select.form-control(ng-model="search.method")
+						option(value="") Select Method
+						option GET
+						option POST
+						option PUT
+						option DELETE
+						option(value="websocket") SOCKET
+
+				.form-group
+					label IP
+					input.form-control.input-sm(type="text",ng-model="search.ip")
+
+				.btn-group
+					button.btn.btn-default(type="submit",ng-click="advancedSearch(search)") Search
+					button.btn.btn-default(type="submit",ng-click="reset()") Reset
+
+//-
+	Templates without Routes.

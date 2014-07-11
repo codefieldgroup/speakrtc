@@ -31,11 +31,11 @@ var Log = new Schema({
  * @param new_log
  */
 Log.statics.add = function (new_log, callback) {
-	var this_model = this;
+  var this_model = this;
 
-	var add = new this_model(new_log);
+  var add = new this_model(new_log);
 
-	add.save(function(error) {
+  add.save(function (error) {
     callback();
   });
 };
@@ -45,105 +45,48 @@ Log.statics.add = function (new_log, callback) {
  * They will be shown of 10 in 10
  *
  * @param options
+ * @param auth_user
  * @param callback
  * @returns {*|Promise}
  */
-Log.statics.get = function (options, callback) {
+Log.statics.get = function (options, auth_user, callback) {
   var this_model = this;
 
-  return this_model.find({})
-    .skip(options.skip)
-    .limit(options.limit)
-    .sort({ datetime: 'desc' })
-    .exec(function (error, docs) {
-      if (!error) {
-        callback(null, docs);
-      }
-      else {
-        callback(error, null);
-      }
-    });
-};
-
-/**
- * Execute function search of logs.
- *
- * @param options
- * @param callback
- */
-Log.statics.a_search = function (options, callback) {
-  var this_model = this;
-
-  var search = {};
-
+  // Rules Filter.
+  var and_filter = [];
   if (options.type) {
-    search.type = options.type
+    and_filter.push({
+      type: options.type
+    })
   }
-
-  if (options.ip) {
-    search.ip = options.ip
-  }
-
   if (options.method) {
-    search.method = options.method
+    and_filter.push({
+      method: options.method
+    })
+  }
+  if (options.ip) {
+    and_filter.push({
+      ip: options.ip
+    })
   }
 
-  if (options.range) {
-
-    // Get range from web client, example: "06/06/2013 - 06/12/2013".
-    // Split this to get range start and range end to compare date with logs.
-    var range = options.range.split(' - ');
-
-    // Convert to object Date.
-    var range_start = new Date(range[0]);
-    var range_end = new Date(range[1]);
-
-    // If range_start distinct to range_end then rest value of day
-    // because function $gte of mongoose compare < but not <=
-    range_start = (range_start == range_end) ? range_start.setDate(range_start.getDate() - 1) : range_start;
-
-    // Sum day to range_end because function $lte of mongoose compare
-    // > but not =>
-    range_end = range_end.setDate(range_end.getDate() + 1);
-
-    search.datetime = {
-      $gte: range_start,
-      $lte: range_end
-    };
+  if (auth_user.is_admin) {
+    return this_model.find({})
+      .and((and_filter.length > 0) ? and_filter : null)
+      .skip(options.skip)
+      .limit(options.limit)
+      .sort({ datetime: 'desc' })
+      .exec(function (error, docs) {
+        if (!error) {
+          callback(null, docs);
+        }
+        else {
+          callback({ msg: 'Internal error while get logs from DB.', type: 'error' }, null);
+        }
+      });
   }
-
-  this_model.find({
-    $or: [
-      search
-    ]
-  }, function (error, docs) {
-    if (!error) {
-
-      callback(null, docs);
-    }
-    else {
-      callback({ msg: 'Error: No logs is found.', type: 'error' }, null);
-    }
-  });
-};
-
-/**
- * Delete logs by range.
- *
- * @param options
- */
-Log.statics.delete_by_range = function (options) {
-  var this_model = this;
-
-  var logs = options.logs;
-
-  for (var key in logs) {
-
-    this_model.remove({
-      _id: logs[key]._id
-    }, function () {
-      //console.log('delete ' + options[key]._id);
-    });
+  else {
+    callback({ msg: 'You do not have access to this page.', type: 'error' }, null);
   }
 };
 

@@ -11,5 +11,8 @@ module.exports = function (app) {
 
   // Route room.
   require('./routes/room')(app);
+
+  // Route log.
+  require('./routes/log')(app);
 };
 

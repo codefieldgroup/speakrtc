@@ -286,7 +286,7 @@ Room.statics.edit = function (auth_user, room_edit, callback) {
     });
   }
   else {
-    callback({ msg: 'You do not have access to this page..', type: 'error' }, null);
+    callback({ msg: 'You do not have access to this page.', type: 'error' }, null);
   }
 };
 

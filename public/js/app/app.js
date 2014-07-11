@@ -46,6 +46,16 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller : userCtrl.user
     })
 
+  /**
+   * Logs Routes.
+   */
+
+    // Show all users.
+    .when('/logs', {
+      templateUrl: '_logs',
+      controller : logCtrl.all
+    })
+
     .otherwise({
       redirectTo: '/'
     });

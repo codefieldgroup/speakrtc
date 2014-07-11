@@ -13,7 +13,7 @@ var userCtrl = {
    * Router:
    * .when('/users', {
    *     templateUrl: '_users',
-   *     controller : usersCtrl
+   *     controller : userCtrl.users
    * })
    *
    * @param $scope
