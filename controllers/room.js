@@ -174,7 +174,7 @@ module.exports = {
    * @param req
    * @param res
    */
-  post_add_message: function (req, res, next) {
+  post_api_add_message: function (req, res, next) {
     var object_user = req.user;
 
     Room.add_message(object_user, req.body, function (error, json_msg) {

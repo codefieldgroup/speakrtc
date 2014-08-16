@@ -214,10 +214,11 @@ footer {
 	display          : none;
 	width            : 100%;
 	background-color : black;
-	top              : 55px;
+	top              : 20px;
 	position         : fixed;
 	z-index          : 2000;
 	color            : rgb(150, 150, 150);
+	opacity          : 0.9;
 }
 
 .cf-slide-down .cf-container {

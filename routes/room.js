@@ -26,7 +26,7 @@ module.exports = function (app) {
   // Invoked for any requests passed to this router.
   app.use('/api/rooms', api_room_route);
 
-  api_room_route.post('/message', user.ensure_authenticated, room.post_add_message);
+  api_room_route.post('/message', user.ensure_authenticated, room.post_api_add_message);
 
   // API /api/rooms
   api_room_route.route('/')
