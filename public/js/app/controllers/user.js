@@ -99,7 +99,9 @@ var userCtrl = {
    * @param User
    */
   add: function ($scope, $rootScope, User) {
-    $scope.user = {
+    var app = this;
+
+    app.user = {
       is_admin: false,
       active  : true
     };
@@ -109,13 +111,13 @@ var userCtrl = {
      *
      * @param user
      */
-    $scope.add = function (user) {
+    app.add = function (user) {
       User.create({}, user, function (result) {
         if (result.type == 'success') {
           $rootScope.users.push(result.user);
           flashMessageLaunch(result.msg);
 
-          $scope.user = {
+          app.user = {
             is_admin : false,
             active   : true,
             email    : '',
@@ -139,19 +141,19 @@ var userCtrl = {
    * Controller User Model: Delete user by ID.
    * Template:
    * span.badge
-   *    span.glyphicon.glyphicon-remove-circle.text-danger(ng-controller="userCtrl.delete",ng-click="delete(user)")
+   *    span.glyphicon.glyphicon-remove-circle.text-danger(ng-controller="userCtrl.delete as app",ng-click="app.delete(user)")
    *
-   * @param $scope
    * @param User
    */
-  delete: function ($scope, $rootScope, User) {
+  delete: function ($rootScope, User) {
+    var app = this;
 
     /**
      * Action Delete user button.
      *
      * @param user
      */
-    $scope.delete = function (user) {
+    app.delete = function (user) {
       User.destroy({id: user._id}, function (result) {
         if (result.type == 'success') {
           flashMessageLaunch(result.msg);

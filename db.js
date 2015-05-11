@@ -26,21 +26,21 @@ module.exports = {
     });
 
     // Open DB connection to database.
-    //mongoose.connect("mongodb://user:password@server/project");
-    /*mongoose.connect("mongodb://" +
-     config.database.user + ":" +
-     config.database.pass + "@" +
-     config.database.host + "/" +
-     config.database.name);*/
 
-    mongoose.connect(config.database.host, config.database.name, { server: { poolSize: 1 }});
+    if (config.database.user && config.database.pass) {
+      //mongoose.connect("mongodb://user:password@server/project");
+      mongoose.connect("mongodb://" +
+       config.database.user + ":" +
+       config.database.pass + "@" +
+       config.database.host + "/" +
+       config.database.name);
+    } else {
+      mongoose.connect(config.database.host, config.database.name, { server: { poolSize: 1 }});
+    }
   },
 
   install: function (callback) {
     // Create user administrator if none exists in the database.
     User.add_super_admin(callback);
-
-    // Creating initial configuration if it does not exist in the database.
-    //Configuration.add_configuration(callback);
   }
 };

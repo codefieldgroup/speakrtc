@@ -8,7 +8,7 @@ block content
 		form.form-signin(role="form",action="/auth/login",method="post")
 			h2.form-signin-heading Speak
 				//- CU: Verify the connection and to show their state.
-				span#cf-connection-state.cf-state-badge.badge disconnected
+				span#cf-connection-state.cf-state-badge.badge RTC offline
 			if code == 1
 				span(class="label label-danger") Bad credentials.
 			input.cf-form-control.form-control(type="text",placeholder="Email address",name="username",required autofocus)

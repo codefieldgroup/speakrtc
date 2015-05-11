@@ -38,7 +38,7 @@ script(id="_rooms",type="text/ng-template")
 									button.close(type="button",data-dismiss="modal",aria-hidden="true") &times;
 									h4.modal-title Delete Room: {{ room.name }}
 								.modal-footer
-									button.btn.btn-danger.btn-sm(type="button",data-dismiss="modal",ng-controller="roomCtrl.delete",ng-click="delete(room)") Ok
+									button.btn.btn-danger.btn-sm(type="button",data-dismiss="modal",ng-controller="roomCtrl.delete as app",ng-click="app.delete(room)") Ok
 									button.btn.btn-default.btn-sm(type="button",data-dismiss="modal") Close
 
 	//- Include template to add room, Controller: roomCtrl.add.
@@ -161,28 +161,28 @@ script(id="_add_room",type="text/ng-template")
 			strong Add New Room.
 
 	.col-lg-12
-		form(role="form",name="form_add_room",ng-controller="roomCtrl.add")
+		form(role="form",name="form_add_room",ng-controller="roomCtrl.add as app")
 			.form-group
 				label Name*
-				input.form-control.input-sm(type="text",ng-model="room.name",required)
+				input.form-control.input-sm(type="text",ng-model="app.room.name",required)
 
 			.form-group
 				label Total of users can connecting*
-				input.form-control.input-sm(type="number",ng-model="room.total",required)
+				input.form-control.input-sm(type="number",ng-model="app.room.total",required)
 
 			.checkbox
 				label
-					input(type="checkbox",ng-model="room.is_blocked")
+					input(type="checkbox",ng-model="app.room.is_blocked")
 					| Blocked?
 
 			.checkbox
 				label
-					input(type="checkbox",ng-model="room.is_show")
+					input(type="checkbox",ng-model="app.room.is_show")
 					| Show?
 
 			.form-group
 				label Allow users*
-				select.form-control(chosen,multiple,ng-options="user._id as user.username for user in users",ng-model="room.users",data-placeholder="Pick users")
+				select.form-control(chosen,multiple,ng-options="user._id as user.username for user in app.users",ng-model="app.room.users",data-placeholder="Pick users")
 
 			.form-group
-				button.btn.btn-default(type="submit",ng-click="add(room)",ng-disabled="!form_add_room.$valid") Add Room
+				button.btn.btn-default(type="submit",ng-click="app.add(app.room)",ng-disabled="!form_add_room.$valid") Add Room

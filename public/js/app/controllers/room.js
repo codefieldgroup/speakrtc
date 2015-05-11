@@ -256,15 +256,25 @@ var roomCtrl = {
 
       $fullscreenButton.removeClass('cf-text-muted text-danger');
       if (state == 'false') {
-        $fullscreenButton.attr('data-cf-fullscreen-state', true).addClass('text-danger');
-        $scope.fullscreen = true;
 
         var selfSrcStream = $self.attr('src');
-        $selfFullscreen.attr('src', selfSrcStream);
-        $streamBlockSelf.hide();
+        if (selfSrcStream != '#' || selfSrcStream != '#') {
 
-        var clientSrcStream = $client.attr('src');
-        $clientFullscreen.attr('src', clientSrcStream);
+          $fullscreenButton.attr('data-cf-fullscreen-state', true).addClass('text-danger');
+          $scope.fullscreen = true;
+
+          $selfFullscreen.attr('src', selfSrcStream);
+          $streamBlockSelf.hide();
+
+          var clientSrcStream = $client.attr('src');
+          $clientFullscreen.attr('src', clientSrcStream);
+        }
+        else {
+          flashMessageLaunch({
+            msg : 'Problem with browser, please try with google chrome.',
+            type: 'error'
+          });
+        }
       }
       else {
         $fullscreenButton.attr('data-cf-fullscreen-state', false).addClass('cf-text-muted');
@@ -322,16 +332,18 @@ var roomCtrl = {
    * @param Room
    */
   add: function ($scope, $rootScope, User, Room) {
-    $scope.users = [];
+    var app = this;
+
+    app.users = [];
 
     // Get all users.
     User.query(function (result) {
       if (result.type == 'success') {
-        $scope.users = result.users;
+        app.users = result.users;
       }
     });
 
-    $scope.room = {
+    app.room = {
       is_show   : true,
       is_blocked: false,
       total     : 4
@@ -342,13 +354,13 @@ var roomCtrl = {
      *
      * @param room
      */
-    $scope.add = function (room) {
+    app.add = function (room) {
       Room.create({}, room, function (result) {
         if (result.type == 'success') {
           $rootScope.rooms.push(result.room);
           flashMessageLaunch(result.msg);
 
-          $scope.room = {
+          app.room = {
             name      : '',
             is_show   : true,
             is_blocked: false,
@@ -371,20 +383,20 @@ var roomCtrl = {
    * Controller Room Model: Delete room by ID.
    * Template:
    * span.badge
-   *    span.glyphicon.glyphicon-remove-circle.text-danger(ng-controller="roomCtrl.delete",ng-click="delete(room)")
+   *    span.glyphicon.glyphicon-remove-circle.text-danger(ng-controller="roomCtrl.delete",ng-click="app.delete(room)")
    *
-   * @param $scope
    * @param $rootScope
    * @param Room
    */
-  delete: function ($scope, $rootScope, Room) {
+  delete: function ($rootScope, Room) {
+    var app = this;
 
     /**
      * Action Delete room button.
      *
      * @param room
      */
-    $scope.delete = function (room) {
+    app.delete = function (room) {
       Room.destroy({id: room._id}, function (result) {
         if (result.type == 'success') {
           flashMessageLaunch(result.msg);

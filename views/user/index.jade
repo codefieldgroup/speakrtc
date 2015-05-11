@@ -38,7 +38,7 @@ script(id="_users",type="text/ng-template")
 									button.close(type="button",data-dismiss="modal",aria-hidden="true") &times;
 									h4.modal-title Delete User: {{ iuser.username }}
 								.modal-footer
-									button.btn.btn-danger.btn-sm(type="button",data-dismiss="modal",ng-controller="userCtrl.delete",ng-click="delete(iuser)") Ok
+									button.btn.btn-danger.btn-sm(type="button",data-dismiss="modal",ng-controller="userCtrl.delete as app",ng-click="app.delete(iuser)") Ok
 									button.btn.btn-default.btn-sm(type="button",data-dismiss="modal") Close
 
 	//- Include template to add user, Controller: userCtrl.add.
@@ -88,32 +88,32 @@ script(id="_add_user",type="text/ng-template")
 			strong Add New User.
 
 	.col-lg-12
-		form(role="form",name="form_add_user",ng-controller="userCtrl.add")
+		form(role="form",name="form_add_user",ng-controller="userCtrl.add as app")
 			.form-group
 				label Email*
-				input.form-control.input-sm(type="email",ng-model="user.email",required)
+				input.form-control.input-sm(type="email",ng-model="app.user.email",required)
 
 			.form-group
 				label Name*
-				input.form-control.input-sm(type="text",ng-model="user.name",required)
+				input.form-control.input-sm(type="text",ng-model="app.user.name",required)
 
 			.form-group
 				label Last Name*
-				input.form-control.input-sm(type="text",ng-model="user.last_name",required)
+				input.form-control.input-sm(type="text",ng-model="app.user.last_name",required)
 
 			.checkbox
 				label
-					input(type="checkbox",ng-model="user.is_admin")
+					input(type="checkbox",ng-model="app.user.is_admin")
 					| Is Admin?
 
 			.checkbox
 				label
-					input(type="checkbox",ng-model="user.active")
+					input(type="checkbox",ng-model="app.user.active")
 					| Active?
 
 			.form-group
 				label Password*
-				input.form-control.input-sm(type="password",ng-model="user.password",required)
+				input.form-control.input-sm(type="password",ng-model="app.user.password",required)
 
 			.form-group
-				button.btn.btn-default(type="submit",ng-click="add(user)",ng-disabled="!form_add_user.$valid") Add User
+				button.btn.btn-default(type="submit",ng-click="app.add(app.user)",ng-disabled="!form_add_user.$valid") Add User

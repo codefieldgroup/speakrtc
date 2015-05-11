@@ -1,36 +1,35 @@
 {
   "name"       : "SpeakRTC",
-  "version"    : "0.0.1",
-  "author"     : "Victor Cruz <victorcruzalonso@gmail.com>",
+  "version"    : "0.1.0",
+  "author"     : "CF Group <speakrtc@gmail.com>",
   "description": "",
-  "private"    : true,
 
   "scripts": {
     "start": "node app.js"
   },
 
   "dependencies": {
-    "express"                : "*",
-    "express-session"        : "*",
-    "jade"                   : "*",
-    "easyrtc"                : "*",
-    "passport"               : "*",
-    "passport-local"         : "*",
-    "passport-local-mongoose": "*",
-    "mongoose"               : "*",
-    "socket.io"              : "*",
-    "zeparser"               : "*",
-    "winston"                : "*",
-    "events"                 : "*",
-    "body-parser"            : "*",
-    "cookie-parser"          : "*",
-    "errorhandler"           : "*",
-    "method-override"        : "*",
-    "serve-favicon"          : "*",
-    "static-favicon"         : "*"
+    "express"                : "~4.4.1",
+    "express-session"        : "~1.2.1",
+    "jade"                   : "~1.3.1",
+    "easyrtc"                : "~1.0.11",
+    "passport"               : "~0.2.0",
+    "passport-local"         : "~1.0.0",
+    "passport-local-mongoose": "~0.3.0",
+    "mongoose"               : "~3.8.12",
+    "socket.io"              : "~0.9.17",
+    "zeparser"               : "~0.0.7",
+    "winston"                : "~0.7.3",
+    "events"                 : "~1.0.1",
+    "body-parser"            : "~1.3.0",
+    "cookie-parser"          : "~1.1.0",
+    "errorhandler"           : "~1.0.2",
+    "method-override"        : "~2.0.2",
+    "serve-favicon"          : "~2.0.1",
+    "static-favicon"         : "~2.0.0-alpha"
   },
 
-  "license": "",
+  "license": "MIT",
 
   "engines": {
     "node": ">=0.10"

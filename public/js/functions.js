@@ -23,12 +23,12 @@ function refreshConnectionState(code) {
       break;
     case 1:
       $connection_state
-        .html('connect')
-        .css('background-color', '#447a44');
+        .html('RTC')
+        .css({'background-color'   : '#447a44'});
       break;
     case 2:
       $connection_state
-        .html('disconnect')
+        .html('RTC offline')
         .css('background-color', '#be3935');
       break;
     case 3:
