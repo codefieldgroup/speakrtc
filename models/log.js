@@ -70,7 +70,8 @@ Log.statics.get = function (options, auth_user, callback) {
     })
   }
 
-  if (auth_user.is_admin) {
+  //if (auth_user.is_admin) {
+  if (true) {
     return this_model.find({})
       .and((and_filter.length > 0) ? and_filter : null)
       .skip(options.skip)

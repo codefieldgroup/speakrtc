@@ -1,6 +1,6 @@
 {
   "database": {
-    "host": "192.168.3.26",
+    "host": "192.168.137.26",
     "name": "speakrtc",
     "user": "",
     "pass": "",
